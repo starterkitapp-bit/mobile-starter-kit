@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -72,7 +71,9 @@ Future<AppThemePreference> loadInitialThemePreference(
         exception: error,
         stack: stackTrace,
         library: 'theme preference',
-        context: ErrorDescription('while restoring the saved theme preference'),
+        context: ErrorDescription(
+          'while restoring the saved theme preference',
+        ),
       ),
     );
     return AppThemePreference.system;
