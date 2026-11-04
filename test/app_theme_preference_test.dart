@@ -82,8 +82,7 @@ void main() {
       });
 
       final preference = await loadInitialThemePreference(
-        _FakeThemePreferenceStore(AppThemePreference.dark)
-          ..shouldFail = true,
+        _FakeThemePreferenceStore(AppThemePreference.dark)..shouldFail = true,
       );
 
       expect(preference, AppThemePreference.system);
