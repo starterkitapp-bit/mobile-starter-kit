@@ -21,9 +21,7 @@ abstract final class AppTheme {
     final systemOverlayStyle = isLight
         ? SystemUiOverlayStyle.dark
         : SystemUiOverlayStyle.light;
-    final barrier = isLight
-        ? const Color(0x52000000)
-        : const Color(0x99000000);
+    final barrier = isLight ? const Color(0x52000000) : const Color(0x99000000);
     final background = isLight
         ? AppPalette.lightBackground
         : AppPalette.darkBackground;
@@ -68,26 +66,27 @@ abstract final class AppTheme {
       border: border,
     );
     final typography = FTypography.inherit(colors: colors, touch: true);
-    final style = FStyle.inherit(
-      colors: colors,
-      typography: typography,
-      touch: true,
-    ).copyWith(
-      borderRadius: const FBorderRadius(
-        xs2: BorderRadius.all(Radius.circular(AppShape.xs)),
-        xs: BorderRadius.all(Radius.circular(AppShape.xs)),
-        sm: BorderRadius.all(Radius.circular(AppShape.sm)),
-        md: BorderRadius.all(Radius.circular(AppShape.md)),
-        lg: BorderRadius.all(Radius.circular(AppShape.lg)),
-        xl: BorderRadius.all(Radius.circular(AppShape.xl)),
-        xl2: BorderRadius.all(Radius.circular(AppShape.xxl)),
-        xl3: BorderRadius.all(Radius.circular(AppShape.xxl)),
-      ),
-      pagePadding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.lg,
-        vertical: AppSpacing.sm,
-      ),
-    );
+    final style =
+        FStyle.inherit(
+          colors: colors,
+          typography: typography,
+          touch: true,
+        ).copyWith(
+          borderRadius: const FBorderRadius(
+            xs2: BorderRadius.all(Radius.circular(AppShape.xs)),
+            xs: BorderRadius.all(Radius.circular(AppShape.xs)),
+            sm: BorderRadius.all(Radius.circular(AppShape.sm)),
+            md: BorderRadius.all(Radius.circular(AppShape.md)),
+            lg: BorderRadius.all(Radius.circular(AppShape.lg)),
+            xl: BorderRadius.all(Radius.circular(AppShape.xl)),
+            xl2: BorderRadius.all(Radius.circular(AppShape.xxl)),
+            xl3: BorderRadius.all(Radius.circular(AppShape.xxl)),
+          ),
+          pagePadding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.sm,
+          ),
+        );
 
     return FThemeData(
       colors: colors,

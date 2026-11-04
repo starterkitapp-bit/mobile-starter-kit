@@ -21,17 +21,11 @@ void main() {
 
     test('uses accessible foreground contrast for both base surfaces', () {
       expect(
-        _contrastRatio(
-          AppPalette.lightForeground,
-          AppPalette.lightBackground,
-        ),
+        _contrastRatio(AppPalette.lightForeground, AppPalette.lightBackground),
         greaterThanOrEqualTo(4.5),
       );
       expect(
-        _contrastRatio(
-          AppPalette.darkForeground,
-          AppPalette.darkBackground,
-        ),
+        _contrastRatio(AppPalette.darkForeground, AppPalette.darkBackground),
         greaterThanOrEqualTo(4.5),
       );
       expect(
