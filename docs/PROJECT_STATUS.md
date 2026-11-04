@@ -1,39 +1,33 @@
 # Project Status
 
 **Last updated:** 2026-11-04  
-**Current phase:** 2 — Dependency and quality baseline  
-**Overall implementation status:** Flutter foundation and approved dependency baseline verified; shared app capabilities not started
+**Current phase:** 3 — App-wide foundations  
+**Overall implementation status:** Flutter scaffold, dependency baseline, bootstrap, and centralized Light/Dark theme foundation implemented and verified on GitHub Actions.
 
 ## Verified repository facts
 
 - Repository: https://github.com/starterkitapp-bit/mobile-starter-kit
-- Visibility: Public
-- Default branch: main
-- GitHub connection has read/write access.
+- Visibility: Public; default branch: `main`.
 - Engineering governance documentation is present.
-- Flutter scaffold and dependency baseline are committed to main.
-- Latest successful verification: https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41887998401
+- All implementation changes are made directly in this repository.
+- Latest successful verification: https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41900016698
 
 ## Verified toolchain
 
 | Tool | Verified version | Evidence |
 |---|---:|---|
-| Flutter | 3.47.9 stable | GitHub Actions log |
-| Dart | 3.13.7 | Bundled with Flutter 3.47.9; GitHub Actions log |
-| DevTools | 2.60.0 | GitHub Actions log |
-
-The approved Flutter version was used exactly. No SDK upgrade or substitution was made.
+| Flutter | 3.47.9 stable | GitHub Actions |
+| Dart | 3.13.7 | Bundled with Flutter 3.47.9; GitHub Actions |
+| DevTools | 2.60.0 | GitHub Actions |
 
 ## Platform and project baseline
 
-- Flutter project name: `mobile_starter_kit`.
-- Generated with official Flutter tooling using `--empty --platforms=android,ios`.
-- Android and iOS platform folders are present.
-- No web, Windows, macOS, or Linux platform folders were generated.
-- Android Gradle configuration uses `flutter.minSdkVersion`; Flutter 3.47.9 defines this as API 24.
-- iOS Xcode project uses `IPHONEOS_DEPLOYMENT_TARGET = 15.0`.
-- Generated Android and iOS application identifiers currently use the `com.example` placeholder. Replace them with an identifier controlled by the consuming application before publishing.
-- The current `Hello World!` screen is a minimal scaffold only, not the intended app shell or design system.
+- Flutter project: `mobile_starter_kit`, generated for Android and iOS only.
+- Android minimum SDK: Flutter 3.47.9 `flutter.minSdkVersion` (API 24).
+- iOS deployment target: 15.0.
+- No web or desktop platforms are included.
+- Android and iOS application identifiers still use `com.example` placeholders; consuming apps must replace them before publishing.
+- iOS build has not been verified; it requires macOS/Xcode.
 
 ## Resolved direct dependencies
 
@@ -45,82 +39,67 @@ The approved Flutter version was used exactly. No SDK upgrade or substitution wa
 | dio | 5.11.1 | HTTP client |
 | shared_preferences | 2.5.6 | Non-sensitive preferences via SharedPreferencesAsync |
 | intl | 0.20.3 | Locale-aware formatting |
-| very_good_analysis | 11.0.0 | Static analysis rules |
-| flutter_test | Flutter SDK | Widget/unit testing |
+| very_good_analysis | 11.0.0 | Static analysis |
+| flutter_test | Flutter SDK | Tests |
 
-- `pubspec.yaml` uses exact version constraints for the selected third-party direct dependencies.
-- `pubspec.lock` is committed and records the complete resolved dependency graph.
-- GitHub Actions uses `flutter pub get --enforce-lockfile`; dependency drift is not silently accepted.
-- `mocktail 1.0.5` remains an approved option but is intentionally deferred until a test needs mocking. Do not add a package before a concrete use exists.
-- No prohibited code-generation packages or tools were added.
+- Direct dependency versions are pinned; `pubspec.lock` is committed and enforced in CI.
+- `mocktail 1.0.5` remains deferred until a concrete mocking need exists.
+- No prohibited code-generation packages or tools were added. Official Flutter `gen-l10n` remains the only permitted generated-source exception.
 
-## Completed
+## Completed milestones
 
-- [x] Confirmed repository identity, public visibility, default branch, and write permissions.
-- [x] Created README and engineering governance documentation.
-- [x] Generated the official Flutter scaffold for Android and iOS only.
-- [x] Added a minimal widget smoke test.
-- [x] Pinned the approved direct dependency versions.
-- [x] Resolved dependencies with Flutter 3.47.9 / Dart 3.13.7.
-- [x] Committed the generated `pubspec.lock`.
-- [x] Replaced `flutter_lints` with `very_good_analysis 11.0.0`.
-- [x] Passed Dart formatting check.
-- [x] Passed strict Flutter analysis with no findings.
-- [x] Passed the widget smoke test.
-- [x] Passed Android debug APK build with the selected dependencies.
-- [x] Confirmed Android API 24 default and iOS deployment target 15.0.
-- [x] Confirmed no unsupported web or desktop platform folders exist.
-- [x] Restricted normal CI verification to read-only repository permissions.
-- [x] Updated project documentation and decisions to match verified state.
+- [x] M1 — Android/iOS Flutter scaffold, repository governance, and GitHub Actions baseline.
+- [x] M2 — Pinned dependencies, committed lockfile, strict analysis, and reproducible CI.
+- [x] M3 — App bootstrap with required initialization, ProviderScope composition, optional post-first-frame warm-up, and failure reporting.
+- [x] M4 — Centralized monochrome color/spacing/shape/typography/motion tokens; complete Light/Dark Forui and Material 3 themes; root brightness mapping; focused theme tests.
+
+## M4 implementation notes
+
+- Visual tokens are centralized in `lib/app/theme/app_theme_tokens.dart`.
+- `lib/app/theme/app_theme.dart` constructs the Forui 0.27.7 Light/Dark themes and matching Material themes from those app-owned tokens.
+- `MainApp` follows effective Material/system brightness and supplies the corresponding Forui theme.
+- Forui uses touch-optimized typography and style configuration.
+- Material semantic color roles are explicitly aligned to the monochrome palette; surface tint is transparent.
+- Theme tests cover brightness selection, Material/Forui color alignment, key foreground contrast ratios, and shared spacing/shape tokens.
+- Motion durations/curve are tokens only; future animated components must honor reduced-motion preferences. No arbitrary motion or startup delay is introduced.
+- Theme preference persistence is intentionally not part of M4.
 
 ## Verification ledger
 
 | Check | Status | Evidence |
 |---|---|---|
-| Flutter SDK | Passed | Flutter 3.47.9 in Actions log |
-| Dart SDK | Passed | Dart 3.13.7 in Actions log |
-| Dependency resolution | Passed | `flutter pub get` with exact selected versions |
-| Lockfile | Passed | Committed `pubspec.lock`; enforced in CI |
-| Dart formatting | Passed | `dart format --output=none --set-exit-if-changed .` |
-| Dart analysis | Passed | `flutter analyze` with Very Good Analysis 11.0.0 |
-| Widget smoke test | Passed | `flutter test` |
-| Android debug build | Passed | `flutter build apk --debug` |
-| iOS build | Not run | Requires macOS/Xcode; no success claimed |
-| gen-l10n | Not configured | Arabic/English localization is a later focused milestone |
-
-## Bootstrap corrections and lessons
-
-1. `flutter create --empty` does not create a Dart `test/` directory. The first test attempt failed; a small explicit widget smoke test was added instead of switching to a counter-demo template.
-2. The first smoke-test workflow edit had invalid YAML indentation. It was corrected before accepting the scaffold.
-3. Very Good Analysis exposed missing public API documentation and Dart 3.13 constructor syntax requirements in the starter widget. The widget was corrected and the strict analyzer then passed.
-4. The selected dependency set resolved and built successfully. The Android build required the first-run Android/NDK toolchain setup, so the initial build took longer; the successful result is recorded in CI.
+| Flutter/Dart toolchain | Passed | Flutter 3.47.9 / Dart 3.13.7 in Actions |
+| Dependency resolution | Passed | Enforced committed lockfile |
+| Dart formatting | Passed | Run 41900016698 |
+| Strict Dart analysis | Passed | Run 41900016698 |
+| Tests | Passed | Run 41900016698 |
+| Android debug APK | Passed | Run 41900016698 |
+| iOS build | Not run | Requires macOS/Xcode |
+| Arabic/English gen-l10n | Not configured | Future milestone |
 
 ## Not yet completed
 
-- [ ] Configure official gen-l10n for Arabic and English.
-- [ ] Define and implement the `init_app` startup contract and recovery behavior.
-- [ ] Implement the neutral app shell and app-level composition.
+- [ ] Persist System/Light/Dark theme preference with SharedPreferencesAsync.
+- [ ] Configure official gen-l10n for Arabic and English, including RTL/LTR and System/Arabic/English preference.
+- [ ] Implement locale and theme preference restoration without blocking the first usable frame unnecessarily.
 - [ ] Implement navigation under `app/navigation/`.
-- [ ] Implement complete Light/Dark themes and System/Light/Dark preference.
-- [ ] Implement Arabic/English locale preference and RTL/LTR behavior.
-- [ ] Implement non-sensitive preference persistence using SharedPreferencesAsync.
-- [ ] Establish the centralized design tokens and shared Forui components.
-- [ ] Add targeted tests for actual startup, navigation, theme, locale, and preference behavior.
+- [ ] Build the neutral starter shell and reusable shared Forui components.
+- [ ] Add focused tests for preferences, localization, navigation, and accessibility behavior.
 - [ ] Add macOS/Xcode iOS build verification.
 - [ ] Complete security, accessibility, performance, and release-readiness reviews.
-- [ ] Choose and record an explicit repository license.
-- [ ] Decide branch protection/ruleset and merge policy.
+- [ ] Replace placeholder application identifiers before publishing.
+- [ ] Choose an explicit repository license and decide branch protection/ruleset policy.
 
 ## Next focused step
 
-**M3 — Define and implement the app bootstrap and `init_app` contract only.**
+**M5 — Implement persisted System/Light/Dark theme preference.**
 
-Do not implement navigation, localization, theme, or feature modules in parallel with this step.
+Use the existing centralized theme foundation and `SharedPreferencesAsync`. Keep the change focused: explicit System/Light/Dark behavior, deterministic restoration, tests, and documentation. Do not mix localization or navigation into this milestone.
 
 ## Risks and open decisions
 
-- `com.example` application identifiers are placeholders, not release-ready identifiers.
-- License remains unselected; public visibility is not an open-source license.
-- Branch protection/ruleset is not yet configured.
-- Android debug build is verified; iOS build is not verified.
-- No app-specific backend, authentication, analytics, or secure-storage provider has been selected.
+- `com.example` identifiers are placeholders, not release-ready.
+- Public visibility is not an open-source license; no license has been selected.
+- Branch protection/ruleset is not configured.
+- Android debug build is verified; iOS build is not.
+- No backend, authentication, analytics, or secure-storage provider has been selected.
