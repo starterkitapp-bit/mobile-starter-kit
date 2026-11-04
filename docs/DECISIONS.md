@@ -120,3 +120,11 @@ This file is the index and concise log of approved decisions. Material changes r
 - **Decision:** Adopt the decision matrix, engineering responsibility map, failure-mode prevention rules, centralization principles, design-system requirements, 12-point Feature Definition of Done, and separate Product Acceptance Checklist in ENGINEERING_STANDARDS.md and QUALITY_CHECKLIST.md.
 - **Reason:** Make the maintainer's requirements actionable and auditable without creating unnecessary teams, folders, layers, or duplicate sources of truth.
 - **Consequences:** Conflicting proposals require evidence, tradeoffs, migration analysis, an ADR, and explicit maintainer approval before implementation. Feature completion and product readiness are tracked separately. N/A criteria require a reason; completion claims require evidence. Documentation subdirectories are introduced only when real maintained content justifies them.
+
+
+## ADR-0018 — Official Flutter localization with persisted locale preference
+
+- **Status:** Accepted
+- **Decision:** Use Flutter's official `flutter_localizations` and `gen-l10n` with ARB resources for Arabic and English. Represent System/Arabic/English as a typed preference persisted through SharedPreferencesAsync.
+- **Reason:** Keep localization native to Flutter, avoid third-party localization dependencies, and make locale choice predictable across device settings and explicit user preference.
+- **Consequences:** Generated localization source is the only permitted generated-code exception. System mode selects the first supported locale in the device preference list and falls back to English when none is supported. Arabic uses RTL and English uses LTR through Flutter's localization delegates. Preference restoration happens before the first app frame; read failures fall back to System and failed writes do not publish unpersisted state.
