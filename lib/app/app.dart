@@ -8,7 +8,7 @@ import 'package:mobile_starter_kit/app/theme/app_theme_preference.dart';
 /// The root widget of the Mobile Starter Kit application.
 class MainApp extends ConsumerWidget {
   /// Creates the root widget.
-  const MainApp({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

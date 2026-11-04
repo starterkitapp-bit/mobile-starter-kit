@@ -40,9 +40,8 @@ abstract interface class ThemePreferenceStore {
 /// SharedPreferencesAsync implementation for the theme preference.
 class SharedPreferencesThemePreferenceStore implements ThemePreferenceStore {
   /// Creates the store, optionally with an injected preferences instance.
-  SharedPreferencesThemePreferenceStore({
-    SharedPreferencesAsync? preferences,
-  }) : _preferences = preferences ?? SharedPreferencesAsync();
+  new({SharedPreferencesAsync? preferences})
+    : _preferences = preferences ?? SharedPreferencesAsync();
 
   static const _key = 'app.theme_preference';
 
@@ -71,9 +70,7 @@ Future<AppThemePreference> loadInitialThemePreference(
         exception: error,
         stack: stackTrace,
         library: 'theme preference',
-        context: ErrorDescription(
-          'while restoring the saved theme preference',
-        ),
+        context: ErrorDescription('while restoring the saved theme preference'),
       ),
     );
     return AppThemePreference.system;
