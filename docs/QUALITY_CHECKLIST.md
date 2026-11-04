@@ -29,6 +29,7 @@ Use during planning, implementation, review, and release. Mark an item complete 
 - [ ] Light, Dark, and System behavior is correct.
 - [ ] Semantic roles and contrast are correct in both themes.
 - [ ] Arabic RTL and English LTR are correct where relevant.
+- [ ] Locale preference (System/Arabic/English) restores before first frame and safely handles missing, invalid, read-failure, and write-failure states.
 - [ ] Long text, overflow, scaling, and small screens are considered.
 - [ ] Semantics, screen-reader labels, touch targets, focus, and keyboard behavior are correct where relevant.
 - [ ] Motion is purposeful, consistent, and respects reduced-motion behavior.
