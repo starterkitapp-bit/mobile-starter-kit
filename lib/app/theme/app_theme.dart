@@ -89,7 +89,7 @@ abstract final class AppTheme {
             xl2: BorderRadius.all(Radius.circular(AppShape.xxl)),
             xl3: BorderRadius.all(Radius.circular(AppShape.xxl)),
           ),
-          pagePadding: const EdgeInsetsDelta.value(
+          pagePadding: EdgeInsetsDelta.value(
             const EdgeInsets.symmetric(
               horizontal: AppSpacing.lg,
               vertical: AppSpacing.sm,
