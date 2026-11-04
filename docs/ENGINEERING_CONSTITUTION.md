@@ -128,7 +128,13 @@ Version numbers are approved targets, not proof of successful resolution. Before
 - Unsupported platform targets.
 - Claims of test/build/release success without evidence.
 
-## 12. Decision governance
+## 12. Engineering standards and acceptance
+
+The approved decision matrix, engineering responsibility map, failure-mode catalog, centralization rules, design-system standard, 12-point Feature Definition of Done, and separate Product Acceptance Checklist are binding and maintained in [ENGINEERING_STANDARDS.md](ENGINEERING_STANDARDS.md). The detailed execution checklist is in [QUALITY_CHECKLIST.md](QUALITY_CHECKLIST.md).
+
+Centralization means one authoritative source for a shared decision, not one giant file/module. Do not create speculative folders, abstractions, or components. Apply SOLID pragmatically. Every feature must satisfy all applicable Definition of Done criteria; overall product readiness is tracked separately.
+
+## 13. Decision governance
 
 The constitution is the governing baseline. A change to an approved constraint requires:
 1. A concrete problem or requirement.

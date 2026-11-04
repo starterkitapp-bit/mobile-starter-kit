@@ -1,8 +1,14 @@
 # Project Status
 
-**Last updated:** 2026-11-04  
+**Last updated:** 2026-11-05  
 **Current phase:** 3 — App-wide foundations  
 **Overall implementation status:** Flutter scaffold, dependency baseline, bootstrap, and centralized Light/Dark theme foundation are verified. M5 theme preference persistence is implemented and awaiting GitHub Actions verification.
+
+## Governing engineering baseline
+
+- ADR-0017 adopts the expanded decision matrix, responsibility map, failure-mode prevention, centralization rules, design-system requirements, 12-point Feature Definition of Done, and separate Product Acceptance Checklist.
+- Authoritative guidance: [ENGINEERING_CONSTITUTION.md](ENGINEERING_CONSTITUTION.md), [ENGINEERING_STANDARDS.md](ENGINEERING_STANDARDS.md), and [QUALITY_CHECKLIST.md](QUALITY_CHECKLIST.md).
+- These are governance requirements, not proof that all product capabilities are implemented. Product acceptance remains incomplete until each criterion is evidenced.
 
 ## Verified repository facts
 

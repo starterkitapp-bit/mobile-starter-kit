@@ -112,3 +112,11 @@ This file is the index and concise log of approved decisions. Material changes r
 - **Decision:** Represent System/Light/Dark as a typed app-owned preference, restore it before launching the first app frame, and persist changes through the approved SharedPreferencesAsync API.
 - **Reason:** Provide predictable user control while keeping system brightness behavior and explicit overrides centralized.
 - **Consequences:** Missing or unknown stored values resolve to System. A preference-read failure is reported and falls back to System so a non-critical setting cannot prevent startup. A failed write does not publish the new in-memory value. Riverpod owns the live preference state; the storage adapter is replaceable in tests. This preference is not suitable for secrets or critical data.
+
+
+## ADR-0017 — Adopt expanded engineering standards and acceptance model
+
+- **Status:** Accepted
+- **Decision:** Adopt the decision matrix, engineering responsibility map, failure-mode prevention rules, centralization principles, design-system requirements, 12-point Feature Definition of Done, and separate Product Acceptance Checklist in ENGINEERING_STANDARDS.md and QUALITY_CHECKLIST.md.
+- **Reason:** Make the maintainer's requirements actionable and auditable without creating unnecessary teams, folders, layers, or duplicate sources of truth.
+- **Consequences:** Conflicting proposals require evidence, tradeoffs, migration analysis, an ADR, and explicit maintainer approval before implementation. Feature completion and product readiness are tracked separately. N/A criteria require a reason; completion claims require evidence. Documentation subdirectories are introduced only when real maintained content justifies them.

@@ -6,6 +6,12 @@ These instructions apply to every change in this repository.
 
 Maintain a reusable, production-minded Flutter foundation for Android and iOS. This is a starter kit, not a finished business application. Optimize for correctness, clarity, consistency, and long-term maintenance—not code volume.
 
+## Governing standards
+
+The binding project rules are [docs/ENGINEERING_CONSTITUTION.md](docs/ENGINEERING_CONSTITUTION.md) and [docs/ENGINEERING_STANDARDS.md](docs/ENGINEERING_STANDARDS.md). Use [docs/QUALITY_CHECKLIST.md](docs/QUALITY_CHECKLIST.md) for the 12-point Feature Definition of Done and separate Product Acceptance Checklist. Raise any conflict with approved decisions; never silently change stack, platforms, locales, themes, architecture, or code-generation policy.
+
+Centralization means one authoritative source for shared decisions, not one giant file/module. Apply SOLID pragmatically. Do not create speculative folders, layers, interfaces, or shared components; keep feature-specific policy with its feature.
+
 ## Required working method
 
 1. Understand the requested outcome, existing repository state, constraints, and acceptance criteria before editing.
