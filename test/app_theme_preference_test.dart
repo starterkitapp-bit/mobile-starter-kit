@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';\nimport 'package:forui/forui.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:forui/forui.dart';
 import 'package:mobile_starter_kit/app/app.dart';
 import 'package:mobile_starter_kit/app/theme/app_theme_preference.dart';
 
@@ -64,7 +65,15 @@ void main() {
       );
     });
 
-    test('restores a saved Light or Dark preference', () async {\n      final preference = await loadInitialThemePreference(\n        _FakeThemePreferenceStore(AppThemePreference.dark),\n      );\n\n      expect(preference, AppThemePreference.dark);\n    });\n\n    test('reports restoration errors and falls back to System', () async {
+    test('restores a saved Light or Dark preference', () async {
+      final preference = await loadInitialThemePreference(
+        _FakeThemePreferenceStore(AppThemePreference.dark),
+      );
+
+      expect(preference, AppThemePreference.dark);
+    });
+
+    test('reports restoration errors and falls back to System', () async {
       final previousHandler = FlutterError.onError;
       final reported = <FlutterErrorDetails>[];
       FlutterError.onError = reported.add;
