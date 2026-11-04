@@ -1,6 +1,6 @@
 # Architecture Baseline
 
-**Status:** Direction approved; implementation not yet created.
+**Status:** Bootstrap baseline implemented; shared app capabilities are next.
 
 ## Guiding approach
 
@@ -95,13 +95,17 @@ Dio 5.11.1 is the approved HTTP client. Add interceptors and shared policy only 
 
 ## Initialization contract
 
-The project constitution calls for a clear `init_app` entry point. Its final signature and dependency contract must be established during bootstrap implementation. It should:
-- Make initialization order explicit.
-- Separate required initialization from optional warm-up.
-- Be deterministic and testable.
-- Avoid arbitrary fixed delays.
-- Surface recoverable and fatal failures distinctly.
-- Avoid doing network-dependent work that is not required to show a usable first frame.
+Implemented in `lib/app/bootstrap/app_bootstrap.dart` as `initApp`:
+
+1. Ensure Flutter bindings exist before invoking platform/plugin initialization.
+2. Await optional required initialization before launching the app. Required initialization errors propagate; the app is not launched in a partially initialized state.
+3. Register optional warm-up as a post-frame callback before calling `runApp`, so the callback cannot miss the initial frame.
+4. Launch the root widget inside Riverpod's `ProviderScope`.
+5. Run optional warm-up after the first frame without blocking that frame. Report warm-up errors through `FlutterError.reportError`; do not silently discard them.
+
+`main()` delegates to this single entry point. No real startup tasks are registered yet, so the current app starts without artificial delays, network calls, or placeholder initialization work.
+
+The bootstrap deliberately does not impose one global timeout on unrelated future tasks. Each required initializer must bound its own I/O and platform operations with task-appropriate timeouts and cancellation. When real required tasks are introduced, classify fatal versus recoverable failures and provide recovery UX for recoverable cases; do not hide failures with silent fallback.
 
 ## Testing boundaries
 
@@ -109,7 +113,7 @@ Test pure logic without Flutter where possible, providers/state transitions with
 
 ## Open architecture questions
 
-- Exact app startup state model and recovery UX.
+- Recovery UX for concrete required startup tasks once those tasks exist.
 - Exact route set for the neutral starter shell.
 - Secure storage package and platform threat model, if secrets become necessary.
 - Logging/crash reporting strategy, if a vendor is later required.

@@ -1,8 +1,8 @@
 # Project Status
 
 **Last updated:** 2026-11-04  
-**Current phase:** 2 — Dependency and quality baseline  
-**Overall implementation status:** Flutter foundation and approved dependency baseline verified; shared app capabilities not started
+**Current phase:** 3 — App bootstrap  
+**Overall implementation status:** Flutter foundation, dependency baseline, and deterministic app bootstrap implemented; design system, localization, navigation, and app-level capabilities remain.
 
 ## Verified repository facts
 
@@ -11,8 +11,8 @@
 - Default branch: main
 - GitHub connection has read/write access.
 - Engineering governance documentation is present.
-- Flutter scaffold and dependency baseline are committed to main.
-- Latest successful verification: https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41887998401
+- Flutter scaffold, dependency baseline, and app bootstrap are committed to main.
+- Latest successful verification: https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41892021498
 
 ## Verified toolchain
 
@@ -33,7 +33,7 @@ The approved Flutter version was used exactly. No SDK upgrade or substitution wa
 - Android Gradle configuration uses `flutter.minSdkVersion`; Flutter 3.47.9 defines this as API 24.
 - iOS Xcode project uses `IPHONEOS_DEPLOYMENT_TARGET = 15.0`.
 - Generated Android and iOS application identifiers currently use the `com.example` placeholder. Replace them with an identifier controlled by the consuming application before publishing.
-- The current `Hello World!` screen is a minimal scaffold only, not the intended app shell or design system.
+- The current root widget is a minimal placeholder, not the intended app shell or design system.
 
 ## Resolved direct dependencies
 
@@ -66,12 +66,17 @@ The approved Flutter version was used exactly. No SDK upgrade or substitution wa
 - [x] Replaced `flutter_lints` with `very_good_analysis 11.0.0`.
 - [x] Passed Dart formatting check.
 - [x] Passed strict Flutter analysis with no findings.
-- [x] Passed the widget smoke test.
-- [x] Passed Android debug APK build with the selected dependencies.
+- [x] Passed widget and bootstrap tests.
+- [x] Passed Android debug APK build with the selected dependencies and bootstrap.
 - [x] Confirmed Android API 24 default and iOS deployment target 15.0.
 - [x] Confirmed no unsupported web or desktop platform folders exist.
 - [x] Restricted normal CI verification to read-only repository permissions.
-- [x] Updated project documentation and decisions to match verified state.
+- [x] Implemented the `initApp` entry point and kept `main()` minimal.
+- [x] Established Riverpod's `ProviderScope` at the root composition boundary.
+- [x] Separated required initialization from optional post-frame warm-up.
+- [x] Propagated required initialization errors and reported optional warm-up errors.
+- [x] Added deterministic tests for bootstrap ordering, provider scope, and failure behavior.
+- [x] Updated architecture and project status documentation to match verified behavior.
 
 ## Verification ledger
 
@@ -79,11 +84,11 @@ The approved Flutter version was used exactly. No SDK upgrade or substitution wa
 |---|---|---|
 | Flutter SDK | Passed | Flutter 3.47.9 in Actions log |
 | Dart SDK | Passed | Dart 3.13.7 in Actions log |
-| Dependency resolution | Passed | `flutter pub get` with exact selected versions |
+| Dependency resolution | Passed | `flutter pub get --enforce-lockfile` |
 | Lockfile | Passed | Committed `pubspec.lock`; enforced in CI |
 | Dart formatting | Passed | `dart format --output=none --set-exit-if-changed .` |
-| Dart analysis | Passed | `flutter analyze` with Very Good Analysis 11.0.0 |
-| Widget smoke test | Passed | `flutter test` |
+| Dart analysis | Passed | `flutter analyze` with no findings |
+| Widget and bootstrap tests | Passed | `flutter test` |
 | Android debug build | Passed | `flutter build apk --debug` |
 | iOS build | Not run | Requires macOS/Xcode; no success claimed |
 | gen-l10n | Not configured | Arabic/English localization is a later focused milestone |
@@ -92,20 +97,21 @@ The approved Flutter version was used exactly. No SDK upgrade or substitution wa
 
 1. `flutter create --empty` does not create a Dart `test/` directory. The first test attempt failed; a small explicit widget smoke test was added instead of switching to a counter-demo template.
 2. The first smoke-test workflow edit had invalid YAML indentation. It was corrected before accepting the scaffold.
-3. Very Good Analysis exposed missing public API documentation and Dart 3.13 constructor syntax requirements in the starter widget. The widget was corrected and the strict analyzer then passed.
-4. The selected dependency set resolved and built successfully. The Android build required the first-run Android/NDK toolchain setup, so the initial build took longer; the successful result is recorded in CI.
+3. Very Good Analysis exposed public API documentation and Dart 3.13 constructor-style requirements. The code was corrected without relaxing analyzer rules.
+4. Bootstrap tests initially assumed the first app build happened only after `initApp` returned. Flutter can render the initial frame during `runApp`; tests now assert actual event order instead of an incorrect timing assumption.
+5. The optional warm-up callback is registered before `runApp` to ensure it cannot miss that initial frame. It runs after the first frame and does not delay it.
+6. Required initialization failures propagate. Optional warm-up failures are reported through Flutter's error handler. No fake startup tasks, fixed delays, or additional dependencies were introduced.
 
 ## Not yet completed
 
 - [ ] Configure official gen-l10n for Arabic and English.
-- [ ] Define and implement the `init_app` startup contract and recovery behavior.
+- [ ] Implement complete Light/Dark themes and System/Light/Dark preference.
+- [ ] Establish centralized design tokens and shared Forui components.
 - [ ] Implement the neutral app shell and app-level composition.
 - [ ] Implement navigation under `app/navigation/`.
-- [ ] Implement complete Light/Dark themes and System/Light/Dark preference.
 - [ ] Implement Arabic/English locale preference and RTL/LTR behavior.
 - [ ] Implement non-sensitive preference persistence using SharedPreferencesAsync.
-- [ ] Establish the centralized design tokens and shared Forui components.
-- [ ] Add targeted tests for actual startup, navigation, theme, locale, and preference behavior.
+- [ ] Add targeted tests for actual navigation, theme, locale, and preference behavior.
 - [ ] Add macOS/Xcode iOS build verification.
 - [ ] Complete security, accessibility, performance, and release-readiness reviews.
 - [ ] Choose and record an explicit repository license.
@@ -113,13 +119,14 @@ The approved Flutter version was used exactly. No SDK upgrade or substitution wa
 
 ## Next focused step
 
-**M3 — Define and implement the app bootstrap and `init_app` contract only.**
+**M4 — Establish the centralized Forui design-system and theme foundation only.**
 
-Do not implement navigation, localization, theme, or feature modules in parallel with this step.
+Keep this limited to design tokens and complete Light/Dark theme definitions. Do not combine it with localization, navigation, or feature screens.
 
 ## Risks and open decisions
 
 - `com.example` application identifiers are placeholders, not release-ready identifiers.
+- No real startup tasks are registered yet. Task-specific timeout, cancellation, and recovery behavior must be defined when actual startup work is introduced.
 - License remains unselected; public visibility is not an open-source license.
 - Branch protection/ruleset is not yet configured.
 - Android debug build is verified; iOS build is not verified.
