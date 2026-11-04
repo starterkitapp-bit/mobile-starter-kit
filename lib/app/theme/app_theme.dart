@@ -130,18 +130,44 @@ abstract final class AppTheme {
         : AppPalette.darkErrorForeground;
     final border = isLight ? AppPalette.lightBorder : AppPalette.darkBorder;
 
-    final colorScheme =
-        (isLight ? const ColorScheme.light() : const ColorScheme.dark())
-            .copyWith(
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: primary,
+      brightness: brightness,
+    ).copyWith(
               primary: primary,
               onPrimary: primaryForeground,
+              primaryContainer: secondary,
+              onPrimaryContainer: secondaryForeground,
               secondary: secondary,
               onSecondary: secondaryForeground,
+              secondaryContainer: secondary,
+              onSecondaryContainer: secondaryForeground,
+              tertiary: secondary,
+              onTertiary: secondaryForeground,
+              tertiaryContainer: secondary,
+              onTertiaryContainer: secondaryForeground,
               error: error,
               onError: errorForeground,
               surface: surface,
               onSurface: foreground,
+              onSurfaceVariant: isLight
+                  ? AppPalette.lightMutedForeground
+                  : AppPalette.darkMutedForeground,
               outline: border,
+              outlineVariant: border,
+              surfaceTint: Colors.transparent,
+              shadow: Colors.black,
+              scrim: barrier,
+              inverseSurface: foreground,
+              onInverseSurface: background,
+              inversePrimary: primaryForeground,
+              surfaceDim: background,
+              surfaceBright: surface,
+              surfaceContainerLowest: background,
+              surfaceContainerLow: background,
+              surfaceContainer: surface,
+              surfaceContainerHigh: secondary,
+              surfaceContainerHighest: secondary,
             );
     final baseTextTheme = isLight
         ? Typography.material2021().black

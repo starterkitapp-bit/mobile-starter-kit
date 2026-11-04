@@ -25,6 +25,18 @@ void main() {
         AppTheme.materialDark.colorScheme.surface,
         AppTheme.dark.colors.card,
       );
+      expect(
+        AppTheme.materialLight.colorScheme.tertiary,
+        AppPalette.lightSecondary,
+      );
+      expect(
+        AppTheme.materialDark.colorScheme.tertiary,
+        AppPalette.darkSecondary,
+      );
+      expect(
+        AppTheme.materialLight.colorScheme.surfaceTint,
+        Colors.transparent,
+      );
     });
 
     test('uses accessible foreground contrast for theme states', () {
