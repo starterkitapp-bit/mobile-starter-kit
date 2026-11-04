@@ -96,3 +96,11 @@ This file is the index and concise log of approved decisions. Material changes r
 - **Decision:** Use exact direct dependency versions in pubspec.yaml, commit pubspec.lock, and run flutter pub get --enforce-lockfile in CI.
 - **Reason:** Prevent unreviewed dependency drift and make CI resolve the same graph as the committed repository.
 - **Consequences:** Any intentional dependency change must update pubspec.yaml and pubspec.lock together, with compatibility evidence and a focused verification run.
+
+
+## ADR-0015 — Centralized monochrome Forui and Material theme foundation
+
+- **Status:** Accepted
+- **Decision:** Keep app-owned visual tokens in `lib/app/theme/app_theme_tokens.dart` and construct complete Light/Dark Forui 0.27.7 and Material 3 themes from that shared source.
+- **Reason:** Maintain one visual source of truth while supporting both Forui-first UI and Flutter platform widgets.
+- **Consequences:** The app root maps effective system brightness to the matching Forui theme. Touch-optimized Forui styles are used. Feature UI must consume shared tokens rather than introduce competing palettes or arbitrary per-screen styling. Theme preference persistence (System/Light/Dark) is a separate milestone. Theme source is handwritten; no Forui generator or code-generation tooling is allowed.
