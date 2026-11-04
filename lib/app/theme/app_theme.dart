@@ -130,10 +130,11 @@ abstract final class AppTheme {
         : AppPalette.darkErrorForeground;
     final border = isLight ? AppPalette.lightBorder : AppPalette.darkBorder;
 
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: primary,
-      brightness: brightness,
-    ).copyWith(
+    final colorScheme =
+        ColorScheme.fromSeed(
+          seedColor: primary,
+          brightness: brightness,
+        ).copyWith(
               primary: primary,
               onPrimary: primaryForeground,
               primaryContainer: secondary,
@@ -168,7 +169,7 @@ abstract final class AppTheme {
               surfaceContainer: surface,
               surfaceContainerHigh: secondary,
               surfaceContainerHighest: secondary,
-            );
+        );
     final baseTextTheme = isLight
         ? Typography.material2021().black
         : Typography.material2021().white;
