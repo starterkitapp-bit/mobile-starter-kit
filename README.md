@@ -4,10 +4,10 @@ A production-minded, reusable Flutter foundation for Android and iOS.
 
 > Build it right. Keep it clean. Make it last.
 
-**Project status:** Foundation setup  
+**Project status:** Flutter scaffold generated and verified  
 **Specification:** STARTER_KIT — FINAL ENGINEERING CONSTITUTION v4.0  
 **Repository visibility:** Public  
-**Implementation status:** Not started
+**Implementation status:** Foundation scaffold complete; shared app capabilities are not implemented yet
 
 ## What this repository is
 
@@ -19,7 +19,8 @@ The goal is a small, coherent, maintainable baseline with real functionality, ex
 
 | Area | Baseline |
 |---|---|
-| Framework | Flutter 3.47.9 |
+| Framework | Flutter 3.47.9 stable |
+| Dart | 3.13.7 (bundled with Flutter 3.47.9) |
 | Platforms | Android (API 24+) and iOS (15+) only |
 | UI | Forui 0.27.7 |
 | State management | Riverpod 3 |
@@ -32,7 +33,7 @@ The goal is a small, coherent, maintainable baseline with real functionality, ex
 | Architecture | Feature-first with pragmatic layers |
 | Generated source | Prohibited, except official gen-l10n output |
 
-Exact dependency constraints and compatibility must be checked against official package metadata and Flutter/Dart compatibility before adding packages. This table records the approved target baseline; it is not a claim that dependencies have already been installed or validated.
+The table records approved target choices, not a claim that all listed packages are installed. Only the Flutter SDK's initial scaffold dependencies have been resolved so far. Verify official package metadata, SDK constraints, platform support, and transitive compatibility before adding the approved packages.
 
 ## Non-negotiable principles
 
@@ -57,14 +58,28 @@ Exact dependency constraints and compatibility must be checked against official 
 6. Track verified progress in [PROJECT_STATUS.md](docs/PROJECT_STATUS.md).
 7. Use [the quality checklist](docs/QUALITY_CHECKLIST.md) before accepting implementation work.
 
+## Current implementation
+
+- Flutter project generated using the official Flutter 3.47.9 tooling.
+- Android and iOS platform folders only; no web or desktop targets.
+- Minimal starter entry point and one widget smoke test.
+- GitHub Actions verifies dependency resolution, Dart formatting, analysis, tests, and an Android debug APK build.
+- Latest verified workflow run: [Flutter CI #3](https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41884688671).
+
+The current `Hello World!` screen is only a minimal scaffold used by the smoke test. It is not the intended design system or finished startup experience.
+
+### Important setup notes
+
+- The generated Android and iOS application identifiers currently use the `com.example` placeholder. Replace them with an identifier controlled by the consuming application before publishing.
+- Android minimum SDK resolves to API 24 in the pinned Flutter SDK.
+- The iOS Xcode project deployment target is explicitly 15.0.
+- Android debug build is verified. An iOS build has **not** yet been run on macOS/Xcode.
+- The approved application dependencies and shared app capabilities have not yet been implemented.
+
 ## Scope boundaries
 
 - Android and iOS only. No web, desktop, or other targets unless explicitly approved later.
 - No application-specific business domain is assumed.
 - No license has been selected yet. Public visibility does not, by itself, grant permission to reuse, modify, or redistribute this code. A license decision must be made explicitly before claiming open-source licensing.
 
-## Current status
-
-The repository currently contains the engineering and governance foundation only. No Flutter application scaffold, dependency installation, runtime implementation, automated test suite, or successful platform build is claimed yet.
-
-See [Project Status](docs/PROJECT_STATUS.md) for the next controlled step.
+See [Project Status](docs/PROJECT_STATUS.md) for verified details and the next controlled step.
