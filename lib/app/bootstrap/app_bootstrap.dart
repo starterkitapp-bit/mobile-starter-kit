@@ -6,7 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// An asynchronous task required or optionally performed during app startup.
 typedef AppInitializer = Future<void> Function();
 
-/// Initializes Flutter and launches [app] inside the application's provider scope.
+/// Initializes Flutter and launches [app] inside the application's provider
+/// scope.
 ///
 /// [initializeRequired], when supplied, completes before the first app frame.
 /// Its errors intentionally propagate to the caller so startup cannot silently
