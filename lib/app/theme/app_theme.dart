@@ -18,38 +18,54 @@ abstract final class AppTheme {
 
   static FThemeData _createTheme(Brightness brightness) {
     final isLight = brightness == Brightness.light;
+    final systemOverlayStyle = isLight
+        ? SystemUiOverlayStyle.dark
+        : SystemUiOverlayStyle.light;
+    final barrier = isLight
+        ? const Color(0x52000000)
+        : const Color(0x99000000);
+    final background = isLight
+        ? AppPalette.lightBackground
+        : AppPalette.darkBackground;
+    final foreground = isLight
+        ? AppPalette.lightForeground
+        : AppPalette.darkForeground;
+    final primary = isLight ? AppPalette.lightPrimary : AppPalette.darkPrimary;
+    final primaryForeground = isLight
+        ? AppPalette.lightPrimaryForeground
+        : AppPalette.darkPrimaryForeground;
+    final secondary = isLight
+        ? AppPalette.lightSecondary
+        : AppPalette.darkSecondary;
+    final secondaryForeground = isLight
+        ? AppPalette.lightSecondaryForeground
+        : AppPalette.darkSecondaryForeground;
+    final muted = isLight ? AppPalette.lightMuted : AppPalette.darkMuted;
+    final mutedForeground = isLight
+        ? AppPalette.lightMutedForeground
+        : AppPalette.darkMutedForeground;
+    final error = isLight ? AppPalette.lightError : AppPalette.darkError;
+    final card = isLight ? AppPalette.lightSurface : AppPalette.darkSurface;
+    final border = isLight ? AppPalette.lightBorder : AppPalette.darkBorder;
+
     final colors = FColors(
       brightness: brightness,
-      systemOverlayStyle: isLight
-          ? SystemUiOverlayStyle.dark
-          : SystemUiOverlayStyle.light,
-      barrier: isLight ? const Color(0x52000000) : const Color(0x99000000),
-      background: isLight
-          ? AppPalette.lightBackground
-          : AppPalette.darkBackground,
-      foreground: isLight
-          ? AppPalette.lightForeground
-          : AppPalette.darkForeground,
-      primary: isLight ? AppPalette.lightPrimary : AppPalette.darkPrimary,
-      primaryForeground: isLight
-          ? AppPalette.lightPrimaryForeground
-          : AppPalette.darkPrimaryForeground,
-      secondary: isLight
-          ? AppPalette.lightSecondary
-          : AppPalette.darkSecondary,
-      secondaryForeground: isLight
-          ? AppPalette.lightSecondaryForeground
-          : AppPalette.darkSecondaryForeground,
-      muted: isLight ? AppPalette.lightMuted : AppPalette.darkMuted,
-      mutedForeground: isLight
-          ? AppPalette.lightMutedForeground
-          : AppPalette.darkMutedForeground,
-      destructive: isLight ? AppPalette.lightError : AppPalette.darkError,
+      systemOverlayStyle: systemOverlayStyle,
+      barrier: barrier,
+      background: background,
+      foreground: foreground,
+      primary: primary,
+      primaryForeground: primaryForeground,
+      secondary: secondary,
+      secondaryForeground: secondaryForeground,
+      muted: muted,
+      mutedForeground: mutedForeground,
+      destructive: error,
       destructiveForeground: AppPalette.onError,
-      error: isLight ? AppPalette.lightError : AppPalette.darkError,
+      error: error,
       errorForeground: AppPalette.onError,
-      card: isLight ? AppPalette.lightSurface : AppPalette.darkSurface,
-      border: isLight ? AppPalette.lightBorder : AppPalette.darkBorder,
+      card: card,
+      border: border,
     );
     final typography = FTypography.inherit(colors: colors, touch: true);
     final style = FStyle.inherit(

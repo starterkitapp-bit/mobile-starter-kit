@@ -57,26 +57,23 @@ void main() {
     });
   });
 
-  testWidgets(
-    'follows system brightness for both theme systems',
-    (tester) async {
-      tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
-      addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
+  testWidgets('tracks system brightness', (tester) async {
+    tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+    addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
 
-      await tester.pumpWidget(const MainApp());
+    await tester.pumpWidget(const MainApp());
 
-      final context = tester.element(find.text('Mobile Starter Kit'));
-      expect(FTheme.of(context).colors.brightness, Brightness.dark);
-      expect(Theme.of(context).brightness, Brightness.dark);
+    final context = tester.element(find.text('Mobile Starter Kit'));
+    expect(FTheme.of(context).colors.brightness, Brightness.dark);
+    expect(Theme.of(context).brightness, Brightness.dark);
 
-      tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
-      await tester.pumpAndSettle();
+    tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
+    await tester.pumpAndSettle();
 
-      final lightContext = tester.element(find.text('Mobile Starter Kit'));
-      expect(FTheme.of(lightContext).colors.brightness, Brightness.light);
-      expect(Theme.of(lightContext).brightness, Brightness.light);
-    },
-  );
+    final lightContext = tester.element(find.text('Mobile Starter Kit'));
+    expect(FTheme.of(lightContext).colors.brightness, Brightness.light);
+    expect(Theme.of(lightContext).brightness, Brightness.light);
+  });
 }
 
 double _contrastRatio(Color foreground, Color background) {
