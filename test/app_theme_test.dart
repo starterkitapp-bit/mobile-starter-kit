@@ -14,12 +14,20 @@ void main() {
       expect(AppTheme.forBrightness(Brightness.dark), same(AppTheme.dark));
     });
 
-    test('keeps Material and Forui brightness aligned', () {
+    test('keeps Material and Forui colors aligned', () {
       expect(AppTheme.materialLight.brightness, Brightness.light);
       expect(AppTheme.materialDark.brightness, Brightness.dark);
+      expect(
+        AppTheme.materialLight.colorScheme.primary,
+        AppTheme.light.colors.primary,
+      );
+      expect(
+        AppTheme.materialDark.colorScheme.surface,
+        AppTheme.dark.colors.card,
+      );
     });
 
-    test('uses accessible foreground contrast for both base surfaces', () {
+    test('uses accessible foreground contrast for theme states', () {
       expect(
         _contrastRatio(AppPalette.lightForeground, AppPalette.lightBackground),
         greaterThanOrEqualTo(4.5),
@@ -39,6 +47,20 @@ void main() {
         _contrastRatio(
           AppPalette.darkPrimaryForeground,
           AppPalette.darkPrimary,
+        ),
+        greaterThanOrEqualTo(4.5),
+      );
+      expect(
+        _contrastRatio(
+          AppPalette.lightErrorForeground,
+          AppPalette.lightError,
+        ),
+        greaterThanOrEqualTo(4.5),
+      );
+      expect(
+        _contrastRatio(
+          AppPalette.darkErrorForeground,
+          AppPalette.darkError,
         ),
         greaterThanOrEqualTo(4.5),
       );

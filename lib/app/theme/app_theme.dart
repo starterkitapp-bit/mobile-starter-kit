@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:forui/forui.dart';
 
-import 'app_theme_tokens.dart';
+import 'package:mobile_starter_kit/app/theme/app_theme_tokens.dart';
 
 /// The centralized Light and Dark theme definitions for the application.
 abstract final class AppTheme {
+  /// The complete Light theme for Forui widgets.
   static final FThemeData light = _createTheme(Brightness.light);
+
+  /// The complete Dark theme for Forui widgets.
   static final FThemeData dark = _createTheme(Brightness.dark);
 
-  static final ThemeData materialLight = light.toApproximateMaterialTheme();
-  static final ThemeData materialDark = dark.toApproximateMaterialTheme();
+  /// The matching Flutter Material Light theme.
+  static final ThemeData materialLight = _createMaterialTheme(Brightness.light);
+
+  /// The matching Flutter Material Dark theme.
+  static final ThemeData materialDark = _createMaterialTheme(Brightness.dark);
 
   /// Returns the Forui theme matching the effective app brightness.
   static FThemeData forBrightness(Brightness brightness) =>
@@ -43,6 +49,9 @@ abstract final class AppTheme {
         ? AppPalette.lightMutedForeground
         : AppPalette.darkMutedForeground;
     final error = isLight ? AppPalette.lightError : AppPalette.darkError;
+    final errorForeground = isLight
+        ? AppPalette.lightErrorForeground
+        : AppPalette.darkErrorForeground;
     final card = isLight ? AppPalette.lightSurface : AppPalette.darkSurface;
     final border = isLight ? AppPalette.lightBorder : AppPalette.darkBorder;
 
@@ -59,9 +68,9 @@ abstract final class AppTheme {
       muted: muted,
       mutedForeground: mutedForeground,
       destructive: error,
-      destructiveForeground: AppPalette.onError,
+      destructiveForeground: errorForeground,
       error: error,
-      errorForeground: AppPalette.onError,
+      errorForeground: errorForeground,
       card: card,
       border: border,
     );
@@ -73,18 +82,18 @@ abstract final class AppTheme {
           touch: true,
         ).copyWith(
           borderRadius: const FBorderRadius(
-            xs2: BorderRadius.all(Radius.circular(AppShape.xs)),
             xs: BorderRadius.all(Radius.circular(AppShape.xs)),
-            sm: BorderRadius.all(Radius.circular(AppShape.sm)),
             md: BorderRadius.all(Radius.circular(AppShape.md)),
             lg: BorderRadius.all(Radius.circular(AppShape.lg)),
             xl: BorderRadius.all(Radius.circular(AppShape.xl)),
             xl2: BorderRadius.all(Radius.circular(AppShape.xxl)),
             xl3: BorderRadius.all(Radius.circular(AppShape.xxl)),
           ),
-          pagePadding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg,
-            vertical: AppSpacing.sm,
+          pagePadding: EdgeInsetsDelta.value(
+            const EdgeInsets.symmetric(
+              horizontal: AppSpacing.lg,
+              vertical: AppSpacing.sm,
+            ),
           ),
         );
 
@@ -93,6 +102,87 @@ abstract final class AppTheme {
       typography: typography,
       style: style,
       touch: true,
+    );
+  }
+
+  static ThemeData _createMaterialTheme(Brightness brightness) {
+    final isLight = brightness == Brightness.light;
+    final primary = isLight ? AppPalette.lightPrimary : AppPalette.darkPrimary;
+    final primaryForeground = isLight
+        ? AppPalette.lightPrimaryForeground
+        : AppPalette.darkPrimaryForeground;
+    final secondary = isLight
+        ? AppPalette.lightSecondary
+        : AppPalette.darkSecondary;
+    final secondaryForeground = isLight
+        ? AppPalette.lightSecondaryForeground
+        : AppPalette.darkSecondaryForeground;
+    final foreground = isLight
+        ? AppPalette.lightForeground
+        : AppPalette.darkForeground;
+    final background = isLight
+        ? AppPalette.lightBackground
+        : AppPalette.darkBackground;
+    final surface = isLight ? AppPalette.lightSurface : AppPalette.darkSurface;
+    final error = isLight ? AppPalette.lightError : AppPalette.darkError;
+    final errorForeground = isLight
+        ? AppPalette.lightErrorForeground
+        : AppPalette.darkErrorForeground;
+    final border = isLight ? AppPalette.lightBorder : AppPalette.darkBorder;
+
+    final colorScheme = (isLight ? const ColorScheme.light() : const ColorScheme.dark())
+        .copyWith(
+          primary: primary,
+          onPrimary: primaryForeground,
+          secondary: secondary,
+          onSecondary: secondaryForeground,
+          error: error,
+          onError: errorForeground,
+          surface: surface,
+          onSurface: foreground,
+          outline: border,
+        );
+    final baseTextTheme = isLight
+        ? Typography.material2021().black
+        : Typography.material2021().white;
+    final textTheme = baseTextTheme
+        .apply(bodyColor: foreground, displayColor: foreground)
+        .copyWith(
+          displayLarge: baseTextTheme.displayLarge?.copyWith(
+            fontSize: AppTypography.display,
+          ),
+          displayMedium: baseTextTheme.displayMedium?.copyWith(
+            fontSize: AppTypography.displaySmall,
+          ),
+          headlineLarge: baseTextTheme.headlineLarge?.copyWith(
+            fontSize: AppTypography.heading,
+          ),
+          headlineMedium: baseTextTheme.headlineMedium?.copyWith(
+            fontSize: AppTypography.title,
+          ),
+          headlineSmall: baseTextTheme.headlineSmall?.copyWith(
+            fontSize: AppTypography.titleSmall,
+          ),
+          bodyLarge: baseTextTheme.bodyLarge?.copyWith(
+            fontSize: AppTypography.body,
+          ),
+          bodyMedium: baseTextTheme.bodyMedium?.copyWith(
+            fontSize: AppTypography.bodySmall,
+          ),
+          bodySmall: baseTextTheme.bodySmall?.copyWith(
+            fontSize: AppTypography.label,
+          ),
+        );
+
+    return ThemeData(
+      brightness: brightness,
+      colorScheme: colorScheme,
+      textTheme: textTheme,
+      scaffoldBackgroundColor: background,
+      canvasColor: background,
+      cardColor: surface,
+      dividerColor: border,
+      useMaterial3: true,
     );
   }
 }

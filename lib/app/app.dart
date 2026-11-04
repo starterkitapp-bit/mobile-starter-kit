@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 
-import 'theme/app_theme.dart';
+import 'package:mobile_starter_kit/app/theme/app_theme.dart';
 
 /// The root widget of the Mobile Starter Kit application.
 class MainApp extends StatelessWidget {
@@ -13,7 +13,6 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.materialLight,
       darkTheme: AppTheme.materialDark,
-      themeMode: ThemeMode.system,
       builder: (context, child) {
         final brightness = Theme.brightnessOf(context);
 
