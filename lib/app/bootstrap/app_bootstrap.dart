@@ -26,13 +26,13 @@ Future<void> initApp({
     await initializeRequired();
   }
 
-  runApp(ProviderScope(child: app));
-
   if (warmUp != null) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       unawaited(_runOptionalWarmUp(warmUp));
     });
   }
+
+  runApp(ProviderScope(child: app));
 }
 
 Future<void> _runOptionalWarmUp(AppInitializer warmUp) async {
