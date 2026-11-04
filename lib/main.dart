@@ -1,18 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+import 'app/app.dart';
+import 'app/bootstrap/app_bootstrap.dart';
 
-/// The root widget of the Mobile Starter Kit application.
-class MainApp extends StatelessWidget {
-  /// Creates the root widget.
-  const new({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Hello World!'))),
-    );
-  }
-}
+Future<void> main() => initApp(app: const MainApp());
