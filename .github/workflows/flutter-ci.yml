@@ -19,6 +19,8 @@ jobs:
   verify:
     name: Verify Flutter foundation
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Check out repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -36,14 +38,6 @@ jobs:
       - name: Resolve dependencies
         run: flutter pub get
 
-      - name: Upload resolved lockfile for repository update
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        with:
-          name: resolved-pubspec-lock
-          path: pubspec.lock
-          if-no-files-found: error
-          retention-days: 1
-
       - name: Check Dart formatting
         run: dart format --output=none --set-exit-if-changed .
 
@@ -55,3 +49,37 @@ jobs:
 
       - name: Build Android debug APK
         run: flutter build apk --debug
+
+  update-lockfile:
+    name: Commit resolved dependency lockfile
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Install pinned Flutter SDK
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          channel: stable
+          flutter-version: 3.47.9
+          cache: true
+          pub-cache: true
+
+      - name: Resolve and commit lockfile
+        shell: bash
+        run: |
+          flutter pub get
+          if git diff --quiet -- pubspec.lock; then
+            echo "pubspec.lock is already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pubspec.lock
+          git commit -m "build: lock verified dependency resolution [skip ci]"
+          git push
