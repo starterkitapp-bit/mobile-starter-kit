@@ -41,17 +41,17 @@ jobs:
             cp "$RUNNER_TEMP/README.md" README.md
             mkdir -p test
             cat > test/app_smoke_test.dart <<'EOF'
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile_starter_kit/main.dart';
+          import 'package:flutter_test/flutter_test.dart';
+          import 'package:mobile_starter_kit/main.dart';
 
-void main() {
-  testWidgets('renders the starter application', (tester) async {
-    await tester.pumpWidget(const MainApp());
+          void main() {
+            testWidgets('renders the starter application', (tester) async {
+              await tester.pumpWidget(const MainApp());
 
-    expect(find.text('Hello World!'), findsOneWidget);
-  });
-}
-EOF
+              expect(find.text('Hello World!'), findsOneWidget);
+            });
+          }
+          EOF
             echo "created=true" >> "$GITHUB_OUTPUT"
           else
             echo "created=false" >> "$GITHUB_OUTPUT"
