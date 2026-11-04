@@ -37,6 +37,9 @@ jobs:
       - name: Resolve dependencies from the committed lockfile
         run: flutter pub get --enforce-lockfile
 
+      - name: Preview formatter output
+        run: dart format --output=show lib/app/theme/app_theme.dart test/app_theme_test.dart
+
       - name: Check Dart formatting
         run: dart format --output=none --set-exit-if-changed .
 

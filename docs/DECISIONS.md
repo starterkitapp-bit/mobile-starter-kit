@@ -94,13 +94,5 @@ This file is the index and concise log of approved decisions. Material changes r
 
 - **Status:** Accepted
 - **Decision:** Use exact direct dependency versions in pubspec.yaml, commit pubspec.lock, and run flutter pub get --enforce-lockfile in CI.
-- **Reason:** Prevent unreviewed dependency drift and make CI resolve the same graph as the committed lockfile.
+- **Reason:** Prevent unreviewed dependency drift and make CI resolve the same graph as the committed repository.
 - **Consequences:** Any intentional dependency change must update pubspec.yaml and pubspec.lock together, with compatibility evidence and a focused verification run.
-
-## ADR-0015 — Keep app bootstrap explicit and minimal
-
-- **Status:** Accepted
-- **Decision:** Use a single `initApp` entry point. Initialize Flutter bindings first, await only required initialization before app launch, wrap the root in Riverpod's ProviderScope, and schedule optional warm-up after the first frame.
-- **Reason:** Make startup order deterministic and testable without artificial delays, fake tasks, or unnecessary infrastructure.
-- **Error behavior:** Required initialization errors propagate and prevent launch. Optional warm-up errors are reported through Flutter's error handler and do not block the first frame.
-- **Consequences:** Future required tasks must bound their own I/O/platform work and define fatal versus recoverable behavior. Recovery UI is introduced with real recoverable startup tasks, not speculative placeholder screens.
