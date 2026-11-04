@@ -110,7 +110,9 @@ void main() {
     );
   });
 
-  testWidgets('applies an explicit Light preference at the app root', (tester) async {
+  testWidgets('applies an explicit Light preference at the app root', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
