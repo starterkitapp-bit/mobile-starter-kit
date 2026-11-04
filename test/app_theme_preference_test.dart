@@ -104,9 +104,12 @@ void main() {
       ),
     );
 
-    expect(Theme.of(tester.element(find.text('Mobile Starter Kit'))).brightness,
-        Brightness.dark);
+    expect(
+      Theme.of(tester.element(find.text('Mobile Starter Kit'))).brightness,
+      Brightness.dark,
+    );
   });
+
   testWidgets('applies an explicit Light preference at the app root', (
     tester,
   ) async {
@@ -125,7 +128,6 @@ void main() {
     expect(Theme.of(context).brightness, Brightness.light);
     expect(FTheme.of(context).colors.brightness, Brightness.light);
   });
-
 }
 
 class _FakeThemePreferenceStore implements ThemePreferenceStore {
