@@ -28,12 +28,11 @@ jobs:
           persist-credentials: false
 
       - name: Install pinned Flutter SDK
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
-        with:
-          channel: stable
-          flutter-version: 3.47.9
-          cache: true
-          pub-cache: true
+        shell: bash
+        run: |
+          git clone --depth 1 --branch 3.47.9 https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/flutter/bin/flutter" --version
 
       - name: Resolve dependencies
         run: flutter pub get
@@ -62,12 +61,11 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Install pinned Flutter SDK
-        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
-        with:
-          channel: stable
-          flutter-version: 3.47.9
-          cache: true
-          pub-cache: true
+        shell: bash
+        run: |
+          git clone --depth 1 --branch 3.47.9 https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/flutter/bin/flutter" --version
 
       - name: Resolve and commit lockfile
         shell: bash
