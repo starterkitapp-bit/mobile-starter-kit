@@ -130,18 +130,19 @@ abstract final class AppTheme {
         : AppPalette.darkErrorForeground;
     final border = isLight ? AppPalette.lightBorder : AppPalette.darkBorder;
 
-    final colorScheme = (isLight ? const ColorScheme.light() : const ColorScheme.dark())
-        .copyWith(
-          primary: primary,
-          onPrimary: primaryForeground,
-          secondary: secondary,
-          onSecondary: secondaryForeground,
-          error: error,
-          onError: errorForeground,
-          surface: surface,
-          onSurface: foreground,
-          outline: border,
-        );
+    final colorScheme =
+        (isLight ? const ColorScheme.light() : const ColorScheme.dark())
+            .copyWith(
+              primary: primary,
+              onPrimary: primaryForeground,
+              secondary: secondary,
+              onSecondary: secondaryForeground,
+              error: error,
+              onError: errorForeground,
+              surface: surface,
+              onSurface: foreground,
+              outline: border,
+            );
     final baseTextTheme = isLight
         ? Typography.material2021().black
         : Typography.material2021().white;

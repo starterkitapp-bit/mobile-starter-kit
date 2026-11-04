@@ -51,17 +51,11 @@ void main() {
         greaterThanOrEqualTo(4.5),
       );
       expect(
-        _contrastRatio(
-          AppPalette.lightErrorForeground,
-          AppPalette.lightError,
-        ),
+        _contrastRatio(AppPalette.lightErrorForeground, AppPalette.lightError),
         greaterThanOrEqualTo(4.5),
       );
       expect(
-        _contrastRatio(
-          AppPalette.darkErrorForeground,
-          AppPalette.darkError,
-        ),
+        _contrastRatio(AppPalette.darkErrorForeground, AppPalette.darkError),
         greaterThanOrEqualTo(4.5),
       );
     });
