@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-11-05  
 **Current phase:** 3 — App-wide foundations  
-**Overall implementation status:** Flutter scaffold, dependency baseline, bootstrap, and centralized Light/Dark theme foundation are verified. M5 theme preference persistence is implemented and awaiting GitHub Actions verification.
+**Overall implementation status:** Flutter scaffold, dependency baseline, bootstrap, centralized Light/Dark theme foundation, and persisted System/Light/Dark theme preference are verified.
 
 ## Governing engineering baseline
 
@@ -16,7 +16,7 @@
 - Visibility: Public; default branch: `main`.
 - Engineering governance documentation is present.
 - All implementation changes are made directly in this repository.
-- Latest successful verification: https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41900016698
+- Latest successful verification: https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41931740636
 
 ## Verified toolchain
 
@@ -58,6 +58,7 @@
 - [x] M2 — Pinned dependencies, committed lockfile, strict analysis, and reproducible CI.
 - [x] M3 — App bootstrap with required initialization, ProviderScope composition, optional post-first-frame warm-up, and failure reporting.
 - [x] M4 — Centralized monochrome color/spacing/shape/typography/motion tokens; complete Light/Dark Forui and Material 3 themes; root brightness mapping; focused theme tests.
+- [x] M5 — Persisted System/Light/Dark theme preference with SharedPreferencesAsync, deterministic startup restoration, safe fallback behavior, and focused tests.
 
 ## M4 implementation notes
 
@@ -76,16 +77,16 @@
 |---|---|---|
 | Flutter/Dart toolchain | Passed | Flutter 3.47.9 / Dart 3.13.7 in Actions |
 | Dependency resolution | Passed | Enforced committed lockfile |
-| Dart formatting | Passed | Run 41900016698 |
-| Strict Dart analysis | Passed | Run 41900016698 |
-| Tests | Passed | Run 41900016698 |
-| Android debug APK | Passed | Run 41900016698 |
+| Dart formatting | Passed | Run 41931740636 |
+| Strict Dart analysis | Passed | Run 41931740636 |
+| Tests | Passed | Run 41931740636 |
+| Android debug APK | Passed | Run 41931740636 |
 | iOS build | Not run | Requires macOS/Xcode |
 | Arabic/English gen-l10n | Not configured | Future milestone |
 
 ## Not yet completed
 
-- [ ] Complete M5 verification for persisted System/Light/Dark theme preference with SharedPreferencesAsync.
+- [x] Complete M5 verification for persisted System/Light/Dark theme preference with SharedPreferencesAsync.
 - [ ] Configure official gen-l10n for Arabic and English, including RTL/LTR and System/Arabic/English preference.
 - [ ] Implement locale and theme preference restoration without blocking the first usable frame unnecessarily.
 - [ ] Implement navigation under `app/navigation/`.
@@ -98,9 +99,9 @@
 
 ## Next focused step
 
-**M5 — Verify and complete persisted System/Light/Dark theme preference.**
+**M6 — Arabic/English localization, RTL/LTR, and persisted locale preference.**
 
-Implementation is committed. Await GitHub Actions formatter, strict analysis, tests, and Android debug build; resolve any findings before closing Issue #4. Localization and navigation remain out of scope.
+M5 is implemented and verified by GitHub Actions run 41931740636. Issue #4 is closed. M6 must use official Flutter `gen-l10n` only; no additional code-generation tooling. Navigation remains a separate milestone.
 
 ## Risks and open decisions
 
