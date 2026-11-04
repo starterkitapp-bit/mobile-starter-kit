@@ -158,7 +158,7 @@ abstract final class AppTheme {
           outlineVariant: border,
           surfaceTint: Colors.transparent,
           shadow: Colors.black,
-          scrim: barrier,
+          scrim: Colors.black,
           inverseSurface: foreground,
           onInverseSurface: background,
           inversePrimary: primaryForeground,
