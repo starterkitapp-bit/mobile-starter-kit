@@ -1,6 +1,6 @@
 # Architecture Baseline
 
-**Status:** Bootstrap and centralized Forui/Material theme foundation implemented; remaining app capabilities are tracked as focused milestones.
+**Status:** Bootstrap, centralized themes, persisted theme preference, and Arabic/English localization infrastructure implemented; M6 verification is pending.
 
 ## Guiding approach
 
@@ -41,7 +41,10 @@ Composition root and app-wide behavior:
 - App widget and root configuration.
 - Startup orchestration and lifecycle integration.
 - Navigation configuration under app/navigation/.
-- Theme and locale selection. Theme preference is restored before the first frame; the typed System/Light/Dark preference is held in Riverpod and persisted through SharedPreferencesAsync.
+- Theme and locale selection. Theme and locale preferences are restored before the first frame; typed preferences are held in Riverpod and persisted through SharedPreferencesAsync.
+- Localization resources live in `lib/l10n/`; generated Flutter localization APIs are emitted under `lib/app/localization/generated/` by official `gen-l10n`.
+- Arabic and English are the only supported app locales. System mode follows the first supported device locale and falls back to English when none is supported. Explicit preferences override the device locale.
+- Flutter localization delegates provide Arabic RTL and English LTR directionality.
 - Wiring of app-wide providers.
 
 ### core/
@@ -79,11 +82,11 @@ Use go_router 18.1.2. Keep route declarations and route-level policy in app/navi
 
 ## UI system
 
-Forui 0.27.7 is the primary UI foundation. `app/theme/app_theme_tokens.dart` is the app-owned source for monochrome color, spacing, shape, typography, and motion tokens. `app/theme/app_theme.dart` builds matching Light/Dark Forui and Material themes from those tokens; `MainApp` selects the matching Forui theme from effective Material brightness. Use touch-optimized Forui typography/style and keep feature styling token-driven. Theme preference persistence and shared feature components remain separate milestones. Do not introduce parallel component libraries, generated Forui theme source, or scattered raw styling.
+Forui 0.27.7 is the primary UI foundation. `app/theme/app_theme_tokens.dart` is the app-owned source for monochrome color, spacing, shape, typography, and motion tokens. `app/theme/app_theme.dart` builds matching Light/Dark Forui and Material themes from those tokens; `MainApp` selects the matching Forui theme from effective Material brightness. Use touch-optimized Forui typography/style and keep feature styling token-driven. Theme and locale preference persistence are implemented separately from shared feature components. Do not introduce parallel component libraries, generated Forui theme source, or scattered raw styling.
 
 ## Startup
 
-Keep native launch presentation separate from Flutter initialization UI. Initialization should represent real tasks, have explicit failure behavior, and avoid arbitrary timers. The startup flow must be testable without relying on wall-clock sleeps.
+Keep native launch presentation separate from Flutter initialization UI. Initialization should represent real tasks, have explicit failure behavior, and avoid arbitrary timers. Theme and locale preference read failures are reported and fall back to System. The startup flow must be testable without relying on wall-clock sleeps.
 
 ## Persistence
 
