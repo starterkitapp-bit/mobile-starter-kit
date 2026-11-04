@@ -7,7 +7,7 @@ void main() {
 /// The root widget of the Mobile Starter Kit application.
 class MainApp extends StatelessWidget {
   /// Creates the root widget.
-  new({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
