@@ -17,6 +17,7 @@ typedef AppInitializer = Future<void> Function();
 /// reported to Flutter's error handler and do not take down the launched app.
 Future<void> initApp({
   required Widget app,
+  List<Override> overrides = const [],
   AppInitializer? initializeRequired,
   AppInitializer? warmUp,
 }) async {
@@ -32,7 +33,7 @@ Future<void> initApp({
     });
   }
 
-  runApp(ProviderScope(child: app));
+  runApp(ProviderScope(overrides: overrides, child: app));
 }
 
 Future<void> _runOptionalWarmUp(AppInitializer warmUp) async {
