@@ -113,21 +113,22 @@ void main() {
   testWidgets(
     'applies an explicit Light preference at the app root',
     (tester) async {
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          initialThemePreferenceProvider.overrideWithValue(
-            AppThemePreference.light,
-          ),
-        ],
-        child: const MainApp(),
-      ),
-    );
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            initialThemePreferenceProvider.overrideWithValue(
+              AppThemePreference.light,
+            ),
+          ],
+          child: const MainApp(),
+        ),
+      );
 
-    final context = tester.element(find.text('Mobile Starter Kit'));
-    expect(Theme.of(context).brightness, Brightness.light);
-    expect(FTheme.of(context).colors.brightness, Brightness.light);
-  });
+      final context = tester.element(find.text('Mobile Starter Kit'));
+      expect(Theme.of(context).brightness, Brightness.light);
+      expect(FTheme.of(context).colors.brightness, Brightness.light);
+    },
+  );
 }
 
 class _FakeThemePreferenceStore implements ThemePreferenceStore {
