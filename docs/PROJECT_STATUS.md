@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-11-05  
 **Current phase:** 3 — App-wide foundations  
-**Overall implementation status:** Flutter scaffold, dependency baseline, bootstrap, centralized Light/Dark theme foundation, and persisted System/Light/Dark theme preference are verified.
+**Overall implementation status:** Flutter scaffold, dependency baseline, bootstrap, centralized Light/Dark theme foundation and persisted System/Light/Dark theme preference are verified. Arabic/English localization infrastructure is implemented; M6 verification is pending.
 
 ## Governing engineering baseline
 
@@ -16,7 +16,7 @@
 - Visibility: Public; default branch: `main`.
 - Engineering governance documentation is present.
 - All implementation changes are made directly in this repository.
-- Latest successful verification: https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41931740636
+- Latest successful verification: https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41931740636 (M5); M6 verification pending.
 
 ## Verified toolchain
 
@@ -87,8 +87,8 @@
 ## Not yet completed
 
 - [x] Complete M5 verification for persisted System/Light/Dark theme preference with SharedPreferencesAsync.
-- [ ] Configure official gen-l10n for Arabic and English, including RTL/LTR and System/Arabic/English preference.
-- [ ] Implement locale and theme preference restoration without blocking the first usable frame unnecessarily.
+- [ ] Verify official gen-l10n Arabic/English resources, RTL/LTR behavior, and System/Arabic/English preference in GitHub Actions.
+- [x] Implement locale preference restoration before the first app frame using SharedPreferencesAsync.
 - [ ] Implement navigation under `app/navigation/`.
 - [ ] Build the neutral starter shell and reusable shared Forui components.
 - [ ] Add focused tests for preferences, localization, navigation, and accessibility behavior.
@@ -99,9 +99,9 @@
 
 ## Next focused step
 
-**M6 — Arabic/English localization, RTL/LTR, and persisted locale preference.**
+**M6 — Verify Arabic/English localization, RTL/LTR, and persisted locale preference.**
 
-M5 is implemented and verified by GitHub Actions run 41931740636. Issue #4 is closed. M6 must use official Flutter `gen-l10n` only; no additional code-generation tooling. Navigation remains a separate milestone.
+Implementation is committed. Run GitHub Actions formatter, strict analysis, tests, and Android debug build; resolve all findings before closing Issue #5. M5 remains verified by run 41931740636. Navigation remains a separate milestone.
 
 ## Risks and open decisions
 
