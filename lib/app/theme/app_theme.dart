@@ -89,7 +89,7 @@ abstract final class AppTheme {
             xl2: BorderRadius.all(Radius.circular(AppShape.xxl)),
             xl3: BorderRadius.all(Radius.circular(AppShape.xxl)),
           ),
-          pagePadding: EdgeInsetsDelta.value(
+          pagePadding: const EdgeInsetsDelta.value(
             const EdgeInsets.symmetric(
               horizontal: AppSpacing.lg,
               vertical: AppSpacing.sm,
@@ -144,8 +144,8 @@ abstract final class AppTheme {
               outline: border,
             );
     final baseTextTheme = isLight
-        ? const Typography.material2021().black
-        : const Typography.material2021().white;
+        ? Typography.material2021().black
+        : Typography.material2021().white;
     final textTheme = baseTextTheme
         .apply(bodyColor: foreground, displayColor: foreground)
         .copyWith(
