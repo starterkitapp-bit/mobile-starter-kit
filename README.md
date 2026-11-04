@@ -47,16 +47,18 @@ The selected direct dependencies above are pinned to exact versions in `pubspec.
 - Accessibility, security, privacy, performance, reliability, and testability are design requirements—not polish added later.
 - Never report a build, test, platform check, or release as successful without recorded evidence.
 - Keep project documentation and status aligned with the actual repository.
+- Apply the 12-point Feature Definition of Done and separate Product Acceptance Checklist; record evidence rather than assuming completion.
+- Centralize shared decisions without collapsing responsibilities into oversized files or speculative abstractions.
 
 ## Start here
 
 1. Read [AGENTS.md](AGENTS.md) for repository-wide working rules.
 2. Read [the engineering constitution](docs/ENGINEERING_CONSTITUTION.md).
-3. Read [the project charter](docs/PROJECT_CHARTER.md).
+3. Read [the project charter](docs/PROJECT_CHARTER.md) and [engineering standards](docs/ENGINEERING_STANDARDS.md).
 4. Read [the architecture baseline](docs/ARCHITECTURE.md) and [architecture decisions](docs/DECISIONS.md).
 5. Follow [the development workflow](docs/DEVELOPMENT.md).
 6. Track verified progress in [PROJECT_STATUS.md](docs/PROJECT_STATUS.md).
-7. Use [the quality checklist](docs/QUALITY_CHECKLIST.md) before accepting implementation work.
+7. Use [the quality checklist](docs/QUALITY_CHECKLIST.md), including the 12-point Feature Definition of Done and separate Product Acceptance Checklist.
 
 ## Current implementation
 
