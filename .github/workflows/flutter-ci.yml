@@ -34,8 +34,8 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           "$RUNNER_TEMP/flutter/bin/flutter" --version
 
-      - name: Resolve dependencies
-        run: flutter pub get
+      - name: Resolve dependencies from the committed lockfile
+        run: flutter pub get --enforce-lockfile
 
       - name: Check Dart formatting
         run: dart format --output=none --set-exit-if-changed .
@@ -48,36 +48,3 @@ jobs:
 
       - name: Build Android debug APK
         run: flutter build apk --debug
-
-  update-lockfile:
-    name: Commit resolved dependency lockfile
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: verify
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-
-      - name: Install pinned Flutter SDK
-        shell: bash
-        run: |
-          git clone --depth 1 --branch 3.47.9 https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
-          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
-          "$RUNNER_TEMP/flutter/bin/flutter" --version
-
-      - name: Resolve and commit lockfile
-        shell: bash
-        run: |
-          flutter pub get
-          if git diff --quiet -- pubspec.lock; then
-            echo "pubspec.lock is already up to date."
-            exit 0
-          fi
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add pubspec.lock
-          git commit -m "build: lock verified dependency resolution [skip ci]"
-          git push

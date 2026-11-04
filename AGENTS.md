@@ -14,18 +14,28 @@ Maintain a reusable, production-minded Flutter foundation for Android and iOS. T
 4. Prefer the smallest complete solution. Avoid speculative abstractions, unnecessary layers, duplicated mechanisms, and dependencies without a demonstrated need.
 5. Keep changes focused. Do not reformat or modify unrelated files.
 6. Update the relevant documentation and project status in the same change when implementation or decisions materially change.
-7. Verify changes with the strongest checks available in the current environment. Report exact commands and outcomes; distinguish not-run, blocked, failed, and passed.
+7. Verify changes with the strongest checks available in GitHub Actions. Report exact workflow evidence and outcomes; distinguish not-run, blocked, failed, and passed.
 8. Never claim that Android/iOS builds, tests, security checks, or runtime behavior passed without evidence.
+
+## GitHub-first workflow
+
+- For the maintainer's project workflow, make repository changes directly in GitHub.
+- Do not ask the maintainer to install Flutter, run PowerShell, execute local commands, or perform manual file operations on a personal device.
+- Use GitHub Actions for dependency resolution, formatting, analysis, tests, and Android build verification.
+- Keep the normal verification workflow read-only. Any exceptional write-capable workflow must be narrowly scoped and justified.
+- iOS build verification requires macOS/Xcode. Do not claim iOS verification from an Android/Linux runner.
+- Local development may be used by optional contributors, but it is not a prerequisite for maintainer progress.
 
 ## Approved technical constraints
 
-- Flutter 3.47.9; Android API 24+; iOS 15+.
+- Flutter 3.47.9; Dart 3.13.7; Android API 24+; iOS 15+.
 - Android and iOS only. Do not add web or desktop targets.
 - Forui 0.27.7 is the approved primary UI system.
-- Riverpod 3 for state management; go_router for navigation.
+- flutter_riverpod 3.4.3 for state management; go_router 18.1.2 for navigation.
 - Dio 5.11.1 for networking.
-- shared_preferences 2.5.6 through SharedPreferencesAsync for preferences.
-- intl 0.20.3; very_good_analysis 11.0.0; mocktail 1.0.5.
+- shared_preferences 2.5.6 through SharedPreferencesAsync for non-sensitive preferences.
+- intl 0.20.3; very_good_analysis 11.0.0.
+- mocktail 1.0.5 is approved for tests when mocking is actually needed; do not add it before then.
 - Feature-first organization with pragmatic layers. Clean Architecture is selective, not ceremonial.
 - Navigation definitions belong under app/navigation/.
 - Arabic and English only; both RTL and LTR must be first-class.
@@ -70,13 +80,9 @@ These are approved target versions from the user's engineering constitution. Bef
 - Add tests for meaningful behavior, edge cases, regressions, and failure paths.
 - Prefer deterministic tests; avoid sleeps and real network dependencies.
 - Keep test names behavior-focused.
-- Run formatter, analyzer, and relevant tests after implementation.
+- CI must run lockfile-enforced dependency resolution, formatting, strict analysis, tests, and Android build checks.
 - Do not lower analyzer strictness or disable rules merely to silence findings.
-- CI must eventually run the same meaningful quality gates as local development.
-
-## PowerShell workflow for the maintainer
-
-The maintainer works from Windows PowerShell and executes supplied scripts. Provide one coherent PowerShell script per implementation step, not many fragmented scripts. Do not include commands that launch the app. Every implementation script must finish with dart analyze. Keep scripts focused and avoid backup-file generation or unnecessary checks.
+- A skipped check is not a pass.
 
 ## Completion report
 
@@ -84,7 +90,7 @@ For each implementation step, record:
 - Goal and scope.
 - Files changed.
 - Important decisions and tradeoffs.
-- Commands/checks run and their actual results.
+- GitHub Actions workflow/checks run and their actual results.
 - Checks not run and why.
 - Remaining risks or follow-up work.
 - Documentation/status updates.

@@ -71,11 +71,11 @@ Each feature owns its user-facing behavior and relevant state/data policy. A fea
 
 ## State management
 
-Riverpod 3 is the approved state-management and composition tool. Provider scope and lifetime must be deliberate. Avoid global mutable singletons and duplicated sources of truth. Keep ephemeral widget state local unless it is shared or must survive navigation/lifecycle boundaries.
+Use flutter_riverpod 3.4.3 as the approved state-management and composition tool. Provider scope and lifetime must be deliberate. Avoid global mutable singletons and duplicated sources of truth. Keep ephemeral widget state local unless it is shared or must survive navigation/lifecycle boundaries.
 
 ## Navigation
 
-Use go_router. Keep route declarations and route-level policy in app/navigation/. Define authentication/authorization redirects only when the product actually has such requirements. Avoid embedding business logic in route builders.
+Use go_router 18.1.2. Keep route declarations and route-level policy in app/navigation/. Define authentication/authorization redirects only when the product actually has such requirements. Avoid embedding business logic in route builders.
 
 ## UI system
 
@@ -91,7 +91,7 @@ Use SharedPreferencesAsync for non-sensitive user preferences only. Do not store
 
 ## Networking
 
-Dio is the approved HTTP client. Add interceptors and shared policy only for concerns genuinely shared across features. Define timeout, cancellation, error mapping, and retry semantics explicitly. Do not add an API client abstraction before a real API contract exists.
+Dio 5.11.1 is the approved HTTP client. Add interceptors and shared policy only for concerns genuinely shared across features. Define timeout, cancellation, error mapping, and retry semantics explicitly. Do not add an API client abstraction before a real API contract exists.
 
 ## Initialization contract
 

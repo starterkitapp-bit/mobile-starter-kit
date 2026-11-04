@@ -4,10 +4,10 @@ A production-minded, reusable Flutter foundation for Android and iOS.
 
 > Build it right. Keep it clean. Make it last.
 
-**Project status:** Flutter scaffold generated and verified  
+**Project status:** Flutter foundation scaffold and dependency baseline verified  
 **Specification:** STARTER_KIT — FINAL ENGINEERING CONSTITUTION v4.0  
 **Repository visibility:** Public  
-**Implementation status:** Foundation scaffold complete; shared app capabilities are not implemented yet
+**Implementation status:** Foundation is established; shared app capabilities are the next milestone
 
 ## What this repository is
 
@@ -15,25 +15,25 @@ Mobile Starter Kit is a reusable engineering foundation for building multiple mo
 
 The goal is a small, coherent, maintainable baseline with real functionality, explicit decisions, measurable quality gates, and optional capabilities that can be removed without destabilizing the core.
 
-## Approved baseline
+## Verified technical baseline
 
-| Area | Baseline |
+| Area | Selected baseline |
 |---|---|
 | Framework | Flutter 3.47.9 stable |
 | Dart | 3.13.7 (bundled with Flutter 3.47.9) |
 | Platforms | Android (API 24+) and iOS (15+) only |
 | UI | Forui 0.27.7 |
-| State management | Riverpod 3 |
-| Navigation | go_router |
+| State management | flutter_riverpod 3.4.3 |
+| Navigation | go_router 18.1.2 |
 | Networking | Dio 5.11.1 |
 | Preferences | shared_preferences 2.5.6 via SharedPreferencesAsync |
-| Localization | Arabic and English; official Flutter gen-l10n |
-| Formatting and analysis | very_good_analysis 11.0.0 |
-| Testing | Flutter test; mocktail 1.0.5 |
+| Date/number formatting | intl 0.20.3 |
+| Static analysis | very_good_analysis 11.0.0 |
+| Tests | Flutter test; mocktail 1.0.5 is approved but deferred until mocking is actually needed |
 | Architecture | Feature-first with pragmatic layers |
-| Generated source | Prohibited, except official gen-l10n output |
+| Generated source | Prohibited, except official Flutter gen-l10n output |
 
-The table records approved target choices, not a claim that all listed packages are installed. Only the Flutter SDK's initial scaffold dependencies have been resolved so far. Verify official package metadata, SDK constraints, platform support, and transitive compatibility before adding the approved packages.
+The selected direct dependencies above are pinned to exact versions in `pubspec.yaml`, and the resolved dependency graph is committed in `pubspec.lock`. GitHub Actions enforces the lockfile during verification. Do not silently upgrade or substitute packages.
 
 ## Non-negotiable principles
 
@@ -60,11 +60,12 @@ The table records approved target choices, not a claim that all listed packages 
 
 ## Current implementation
 
-- Flutter project generated using the official Flutter 3.47.9 tooling.
-- Android and iOS platform folders only; no web or desktop targets.
+- Official Flutter 3.47.9 scaffold for Android and iOS only.
 - Minimal starter entry point and one widget smoke test.
-- GitHub Actions verifies dependency resolution, Dart formatting, analysis, tests, and an Android debug APK build.
-- Latest verified workflow run: [Flutter CI #3](https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41884688671).
+- Exact direct dependency versions resolved and locked.
+- Very Good Analysis 11.0.0 is the active analyzer ruleset.
+- GitHub Actions verifies lockfile resolution, Dart formatting, analysis, tests, and an Android debug APK build.
+- Latest verified run: [Flutter CI — dependency baseline](https://github.com/starterkitapp-bit/mobile-starter-kit/actions/runs/41887998401).
 
 The current `Hello World!` screen is only a minimal scaffold used by the smoke test. It is not the intended design system or finished startup experience.
 
@@ -74,7 +75,8 @@ The current `Hello World!` screen is only a minimal scaffold used by the smoke t
 - Android minimum SDK resolves to API 24 in the pinned Flutter SDK.
 - The iOS Xcode project deployment target is explicitly 15.0.
 - Android debug build is verified. An iOS build has **not** yet been run on macOS/Xcode.
-- The approved application dependencies and shared app capabilities have not yet been implemented.
+- `mocktail` is deliberately not installed until a real test needs mocks; the current smoke test does not.
+- Localization, navigation, theme, preferences, startup orchestration, and the shared design system are not implemented yet.
 
 ## Scope boundaries
 

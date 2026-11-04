@@ -15,21 +15,21 @@ The foundation must be useful immediately, understandable by a small team, and s
 | Concern | Approved baseline |
 |---|---|
 | Flutter | 3.47.9 stable |
-| Dart | Version bundled with the approved Flutter SDK; verify before implementation |
+| Dart | 3.13.7 (bundled with Flutter 3.47.9) |
 | Android | API 24+ |
 | iOS | iOS 15+ |
 | Supported targets | Android and iOS only |
 | UI system | Forui 0.27.7 |
-| State | Riverpod 3 |
-| Routing | go_router |
+| State | flutter_riverpod 3.4.3 |
+| Routing | go_router 18.1.2 |
 | HTTP | Dio 5.11.1 |
 | Preferences | shared_preferences 2.5.6, using SharedPreferencesAsync |
 | Localization formatting | intl 0.20.3 |
 | Static analysis | very_good_analysis 11.0.0 |
-| Mocking | mocktail 1.0.5 |
+| Mocking | mocktail 1.0.5, only when tests require mocks |
 | Architecture | Feature-first, pragmatic layers |
 
-Version numbers are approved targets, not proof of successful resolution. Before dependency installation, check official package pages, changelogs, SDK constraints, transitive constraints, and platform support. Record any required deviation as an explicit decision.
+Version numbers are approved targets, not proof of successful resolution. Before dependency installation, check official package pages, changelogs, SDK constraints, transitive constraints, and platform support. Record any required deviation as an explicit decision. Exact selected versions and the resolved graph are recorded in pubspec.yaml and pubspec.lock.
 
 ## 3. Architecture constraints
 
@@ -111,9 +111,9 @@ Version numbers are approved targets, not proof of successful resolution. Before
 - Widget-test meaningful UI behavior and states.
 - Integration-test critical user journeys and platform-specific behavior.
 - Include failure and edge cases, not only happy paths.
-- CI must format-check, analyze, and test the supported Flutter project.
+- GitHub Actions must enforce the committed dependency lockfile, formatting, analysis, tests, and Android build.
 - Android build verification must run in a compatible environment.
-- iOS build verification requires macOS and Xcode; never claim it was verified from Windows.
+- iOS build verification requires macOS and Xcode; never claim it was verified from Windows or Linux.
 - Release signing, secrets, and distribution must be handled outside source control.
 
 ## 11. Prohibited practices
