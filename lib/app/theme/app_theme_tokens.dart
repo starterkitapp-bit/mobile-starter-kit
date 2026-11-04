@@ -170,5 +170,5 @@ abstract final class AppMotion {
   static const deliberate = Duration(milliseconds: 280);
 
   /// Standard easing curve.
-  static const standardCurve = Curves.easeInOut;
+  static const Curve standardCurve = Curves.easeInOut;
 }

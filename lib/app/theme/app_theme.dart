@@ -144,8 +144,8 @@ abstract final class AppTheme {
               outline: border,
             );
     final baseTextTheme = isLight
-        ? Typography.material2021().black
-        : Typography.material2021().white;
+        ? const Typography.material2021().black
+        : const Typography.material2021().white;
     final textTheme = baseTextTheme
         .apply(bodyColor: foreground, displayColor: foreground)
         .copyWith(
