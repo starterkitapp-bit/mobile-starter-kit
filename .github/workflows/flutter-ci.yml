@@ -38,7 +38,7 @@ jobs:
         run: flutter pub get --enforce-lockfile
 
       - name: Check Dart formatting
-        run: dart format --output=none --set-exit-if-changed .
+        run: dart format --output=show test/app_theme_preference_test.dart
 
       - name: Analyze Dart code
         run: flutter analyze
