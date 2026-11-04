@@ -24,9 +24,7 @@ class MainApp extends StatelessWidget {
           ),
         );
       },
-      home: const Scaffold(
-        body: Center(child: Text('Mobile Starter Kit')),
-      ),
+      home: const Scaffold(body: Center(child: Text('Mobile Starter Kit'))),
     );
   }
 }

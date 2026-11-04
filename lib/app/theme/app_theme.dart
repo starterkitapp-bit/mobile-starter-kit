@@ -20,11 +20,10 @@ abstract final class AppTheme {
     final isLight = brightness == Brightness.light;
     final colors = FColors(
       brightness: brightness,
-      systemOverlayStyle:
-          isLight ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
-      barrier: isLight
-          ? const Color(0x52000000)
-          : const Color(0x99000000),
+      systemOverlayStyle: isLight
+          ? SystemUiOverlayStyle.dark
+          : SystemUiOverlayStyle.light,
+      barrier: isLight ? const Color(0x52000000) : const Color(0x99000000),
       background: isLight
           ? AppPalette.lightBackground
           : AppPalette.darkBackground,
