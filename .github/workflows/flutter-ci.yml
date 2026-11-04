@@ -9,7 +9,7 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: flutter-ci-${{ github.ref }}
@@ -17,11 +17,13 @@ concurrency:
 
 jobs:
   verify:
-    name: Bootstrap and verify Flutter project
+    name: Verify Flutter foundation
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
 
       - name: Install pinned Flutter SDK
         shell: bash
@@ -30,35 +32,16 @@ jobs:
           echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
           "$RUNNER_TEMP/flutter/bin/flutter" --version
 
-      - name: Generate Android and iOS project scaffold when missing
-        id: bootstrap
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        shell: bash
-        run: |
-          if [ ! -f pubspec.yaml ]; then
-            cp README.md "$RUNNER_TEMP/README.md"
-            flutter create --empty --platforms=android,ios --org com.example --project-name mobile_starter_kit .
-            cp "$RUNNER_TEMP/README.md" README.md
-            mkdir -p test
-            cat > test/app_smoke_test.dart <<'EOF'
-          import 'package:flutter_test/flutter_test.dart';
-          import 'package:mobile_starter_kit/main.dart';
-
-          void main() {
-            testWidgets('renders the starter application', (tester) async {
-              await tester.pumpWidget(const MainApp());
-
-              expect(find.text('Hello World!'), findsOneWidget);
-            });
-          }
-          EOF
-            echo "created=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "created=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Resolve dependencies
         run: flutter pub get
+
+      - name: Upload resolved lockfile for repository update
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: resolved-pubspec-lock
+          path: pubspec.lock
+          if-no-files-found: error
+          retention-days: 1
 
       - name: Check Dart formatting
         run: dart format --output=none --set-exit-if-changed .
@@ -71,13 +54,3 @@ jobs:
 
       - name: Build Android debug APK
         run: flutter build apk --debug
-
-      - name: Commit generated scaffold
-        if: steps.bootstrap.outputs.created == 'true'
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "build: bootstrap Flutter Android and iOS project"
-          git push
