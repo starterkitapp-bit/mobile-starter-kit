@@ -7,7 +7,7 @@ import 'package:mobile_starter_kit/app/bootstrap/app_bootstrap.dart';
 
 void main() {
   testWidgets(
-    'awaits required initialization and launches inside ProviderScope',
+    'runs required initialization before building inside ProviderScope',
     (tester) async {
       final events = <String>[];
 
@@ -26,30 +26,29 @@ void main() {
         },
       );
 
-      expect(events, ['required']);
-
-      await tester.pump();
-
       expect(events, ['required', 'app']);
       expect(find.text('provider scope available'), findsOneWidget);
     },
   );
 
-  testWidgets('starts optional warm-up after the first frame', (tester) async {
+  testWidgets('runs optional warm-up after the first app frame', (
+    tester,
+  ) async {
     final events = <String>[];
 
     await initApp(
-      app: const SizedBox.shrink(),
+      app: Consumer(
+        builder: (context, ref, child) {
+          events.add('app');
+          return const SizedBox.shrink();
+        },
+      ),
       warmUp: () async {
         events.add('warm-up');
       },
     );
 
-    expect(events, isEmpty);
-
-    await tester.pump();
-
-    expect(events, ['warm-up']);
+    expect(events, ['app', 'warm-up']);
   });
 
   testWidgets('propagates required initialization failures', (tester) async {
@@ -79,8 +78,7 @@ void main() {
       },
     );
 
-    await tester.pump();
-
+    expect(reportedError.isCompleted, isTrue);
     final details = await reportedError.future;
     expect(details.exception, isA<StateError>());
     expect(details.library, 'app bootstrap');
