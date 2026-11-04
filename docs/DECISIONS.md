@@ -104,3 +104,11 @@ This file is the index and concise log of approved decisions. Material changes r
 - **Decision:** Keep app-owned visual tokens in `lib/app/theme/app_theme_tokens.dart` and construct complete Light/Dark Forui 0.27.7 and Material 3 themes from that shared source.
 - **Reason:** Maintain one visual source of truth while supporting both Forui-first UI and Flutter platform widgets.
 - **Consequences:** The app root maps effective system brightness to the matching Forui theme. Touch-optimized Forui styles are used. Feature UI must consume shared tokens rather than introduce competing palettes or arbitrary per-screen styling. Theme preference persistence (System/Light/Dark) is a separate milestone. Theme source is handwritten; no Forui generator or code-generation tooling is allowed.
+
+
+## ADR-0016 — Persist the app theme preference with SharedPreferencesAsync
+
+- **Status:** Accepted
+- **Decision:** Represent System/Light/Dark as a typed app-owned preference, restore it before launching the first app frame, and persist changes through the approved SharedPreferencesAsync API.
+- **Reason:** Provide predictable user control while keeping system brightness behavior and explicit overrides centralized.
+- **Consequences:** Missing or unknown stored values resolve to System. A preference-read failure is reported and falls back to System so a non-critical setting cannot prevent startup. A failed write does not publish the new in-memory value. Riverpod owns the live preference state; the storage adapter is replaceable in tests. This preference is not suitable for secrets or critical data.

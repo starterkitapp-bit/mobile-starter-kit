@@ -41,7 +41,7 @@ Composition root and app-wide behavior:
 - App widget and root configuration.
 - Startup orchestration and lifecycle integration.
 - Navigation configuration under app/navigation/.
-- Theme and locale selection.
+- Theme and locale selection. Theme preference is restored before the first frame; the typed System/Light/Dark preference is held in Riverpod and persisted through SharedPreferencesAsync.
 - Wiring of app-wide providers.
 
 ### core/

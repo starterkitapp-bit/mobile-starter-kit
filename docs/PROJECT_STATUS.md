@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-11-04  
 **Current phase:** 3 — App-wide foundations  
-**Overall implementation status:** Flutter scaffold, dependency baseline, bootstrap, and centralized Light/Dark theme foundation implemented and verified on GitHub Actions.
+**Overall implementation status:** Flutter scaffold, dependency baseline, bootstrap, and centralized Light/Dark theme foundation are verified. M5 theme preference persistence is implemented and awaiting GitHub Actions verification.
 
 ## Verified repository facts
 
@@ -79,7 +79,7 @@
 
 ## Not yet completed
 
-- [ ] Persist System/Light/Dark theme preference with SharedPreferencesAsync.
+- [ ] Complete M5 verification for persisted System/Light/Dark theme preference with SharedPreferencesAsync.
 - [ ] Configure official gen-l10n for Arabic and English, including RTL/LTR and System/Arabic/English preference.
 - [ ] Implement locale and theme preference restoration without blocking the first usable frame unnecessarily.
 - [ ] Implement navigation under `app/navigation/`.
@@ -92,9 +92,9 @@
 
 ## Next focused step
 
-**M5 — Implement persisted System/Light/Dark theme preference.**
+**M5 — Verify and complete persisted System/Light/Dark theme preference.**
 
-Use the existing centralized theme foundation and `SharedPreferencesAsync`. Keep the change focused: explicit System/Light/Dark behavior, deterministic restoration, tests, and documentation. Do not mix localization or navigation into this milestone.
+Implementation is committed. Await GitHub Actions formatter, strict analysis, tests, and Android debug build; resolve any findings before closing Issue #4. Localization and navigation remain out of scope.
 
 ## Risks and open decisions
 
