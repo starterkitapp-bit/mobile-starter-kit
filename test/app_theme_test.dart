@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:forui/forui.dart';
 import 'package:mobile_starter_kit/app/app.dart';
@@ -83,7 +84,7 @@ void main() {
     tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
     addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
 
-    await tester.pumpWidget(const MainApp());
+    await tester.pumpWidget(const ProviderScope(child: MainApp()));
 
     final context = tester.element(find.text('Mobile Starter Kit'));
     expect(FTheme.of(context).colors.brightness, Brightness.dark);
