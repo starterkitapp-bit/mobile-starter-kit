@@ -41,10 +41,13 @@ jobs:
         run: flutter gen-l10n
 
       - name: Check Dart formatting
-        run: dart format --output=show lib/app/localization/app_locale_preference.dart
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze Dart code
         run: flutter analyze
 
       - name: Run tests
         run: flutter test
+
+      - name: Build Android debug APK
+        run: flutter build apk --debug
