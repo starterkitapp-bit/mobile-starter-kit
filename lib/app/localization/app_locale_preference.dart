@@ -21,9 +21,7 @@ enum AppLocalePreference {
   };
 
   /// Parses a stored value, defaulting safely to [system].
-  static AppLocalePreference fromStorageValue(String? value) => switch (
-    value
-  ) {
+  static AppLocalePreference fromStorageValue(String? value) => switch (value) {
     'arabic' => arabic,
     'english' => english,
     _ => system,
